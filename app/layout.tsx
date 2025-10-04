@@ -7,9 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "TechNova - The Future of Technology",
-  description: "Discover cutting-edge solutions that transform the way you interact with technology.",
-    generator: 'v0.app'
+  title: "Dijkstra",
+  description: "Dijkstra Landing Page - Built for students, by students.",
 }
 
 export default function RootLayout({
