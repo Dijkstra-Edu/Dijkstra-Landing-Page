@@ -546,7 +546,7 @@ export default function LandingPage() {
                           dark:bg-black dark:hover:bg-neutral-900 dark:text-white border-[#048304] text-[#048304] hover:opacity-90 cursor-pointer
                           h-9 px-4 py-2"
                   onClick={() =>
-                    window.location.replace(
+                    (window.location.href =
                       `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/login`
                     )
                   }
@@ -559,7 +559,7 @@ export default function LandingPage() {
                  dark:bg-black dark:hover:bg-neutral-900 dark:text-white border-[#048304] text-[#048304] hover:opacity-90 cursor-pointer
                  h-9 px-4 py-2"
                   onClick={() =>
-                    window.location.replace(
+                    (window.location.href =
                       `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/onboarding`
                     )
                   }
@@ -1115,7 +1115,7 @@ export default function LandingPage() {
             >
               <Button
                 onClick={() =>
-                  window.location.replace(
+                  (window.location.href =
                     `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/onboarding`
                   )
                 }
@@ -1130,7 +1130,7 @@ export default function LandingPage() {
               <Button
                 variant="ghost"
                 onClick={() =>
-                  window.location.replace(
+                  (window.location.href =
                     `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/dashboard`
                   )
                 }
@@ -1529,7 +1529,7 @@ export default function LandingPage() {
 
                   <Button
                     onClick={() =>
-                      window.location.replace(
+                      (window.location.href =
                         `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/onboarding`
                       )
                     }
@@ -2205,7 +2205,7 @@ export default function LandingPage() {
                             px-8 py-3 rounded-xl shadow-lg shadow-green-600/20 cursor-pointer
                             transition-all duration-300 hover:scale-[1.04] hover:shadow-green-500/30"
                   onClick={() =>
-                    window.location.replace(
+                    (window.location.href =
                       `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/onboarding`
                     )
                   }
@@ -2221,7 +2221,7 @@ export default function LandingPage() {
                             transition-colors duration-200 cursor-pointer
                             hover:bg-gray-100 dark:hover:bg-gray-800"
                   onClick={() =>
-                    window.location.replace(
+                    (window.location.href =
                       `${process.env.NEXT_PUBLIC_DIJKSTRA_PLATFORM_URL}/dashboard`
                     )
                   }
