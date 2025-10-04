@@ -1372,28 +1372,6 @@ export default function LandingPage() {
             <h3 className="text-center text-gray-600 text-sm uppercase mb-6 tracking-wider">
               Our Members have gone on to work in the following companies:
             </h3>
-            {/* <div className="flex justify-center items-center gap-10 flex-wrap">
-              {[
-                "/logos/CERN.png",
-                "/logos/microsoft.png",
-                "/logos/apple.png",
-                "/logos/hsbc.png",
-                "/logos/hyperface.png",
-                "/logos/balkan.jpeg",
-                "/logos/HP.png",
-                "/logos/phillips.png",
-                "/logos/pwc.png",
-                "/logos/signify.png",
-                "/logos/tcs.png",
-              ].map((src, idx) => (
-                <img
-                  key={idx}
-                  src={src}
-                  alt={`Company logo ${idx + 1}`}
-                  className="h-18 w-auto filter grayscale hover:grayscale-0 transition duration-300 ease-in-out"
-                />
-              ))}
-            </div> */}
             <ScrollingLogos logos={logos} />
           </div>
         </div>
