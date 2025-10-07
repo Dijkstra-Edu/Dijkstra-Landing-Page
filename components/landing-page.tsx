@@ -523,12 +523,12 @@ export default function LandingPage() {
                 </div>
 
                 {/* Pricing - Simple Link */}
-                <Link
+                {/* <Link
                   href="#pricing"
                   className="text-gray-300 hover:text-white transition-colors duration-300 text-sm font-medium"
                 >
                   Pricing
-                </Link>
+                </Link> */}
 
                 {/* Testimonials - Simple Link */}
                 <Link
@@ -1476,7 +1476,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-24 relative overflow-hidden">
+      {/* <section id="pricing" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(4,131,4,0.15),transparent_50%)]" />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -1498,7 +1498,6 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Starter Plan */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1571,7 +1570,6 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            {/* Professional Plan (Popular) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1632,7 +1630,6 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            {/* Enterprise Plan */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1686,7 +1683,6 @@ export default function LandingPage() {
             </motion.div>
           </div>
 
-          {/* FAQ or Additional Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1713,7 +1709,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Open Source, GitHub based, Community facing work */}
 
