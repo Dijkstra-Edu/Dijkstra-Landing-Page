@@ -94,6 +94,7 @@ const logos = [
     "/logos/CERN.png",
     "/logos/microsoft.png",
     "/logos/apple.png",
+    "/logos/amazon.png",
     "/logos/hsbc.png",
     "/logos/hyperface.png",
     "/logos/balkan.jpeg",
@@ -166,6 +167,8 @@ export default function LandingPage() {
   const { theme, setTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
+  const [mobileAccordionOpen, setMobileAccordionOpen] = useState<string | null>(null);
+  const [selectedTimelinePath, setSelectedTimelinePath] = useState<"beginners" | "university">("beginners");
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -544,8 +547,9 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center gap-4"
             >
-              <div className="flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-4">
                 <Button
                   className="bg-black hover:bg-neutral-900 border
              dark:bg-black dark:hover:bg-neutral-900 dark:text-white border-[#048304] text-[#048304] hover:opacity-90 cursor-pointer
@@ -972,7 +976,7 @@ export default function LandingPage() {
                               Team
                             </div>
                             <div className="text-sm text-gray-400">
-                              Meet the people behind TechNova
+                              Meet the people behind Dijkstra
                             </div>
                           </a>
 
@@ -1048,16 +1052,138 @@ export default function LandingPage() {
             className="fixed top-[72px] left-0 right-0 z-40 bg-black border-b border-gray-800 md:hidden"
           >
             <div className="container mx-auto px-4 py-6 flex flex-col gap-6">
-              {["Features", "Products", "About", "Testimonials"].map((item) => (
-                <Link
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="text-gray-300 hover:text-white transition-colors text-lg font-medium"
-                  onClick={() => setIsMenuOpen(false)}
+              {/* Features Accordion */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setMobileAccordionOpen(mobileAccordionOpen === "features" ? null : "features")}
+                  className="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors text-lg font-medium"
                 >
-                  {item}
-                </Link>
-              ))}
+                  Features
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      mobileAccordionOpen === "features" && "rotate-180"
+                    )}
+                  />
+                </button>
+                <AnimatePresence>
+                  {mobileAccordionOpen === "features" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pl-4 space-y-2">
+                        <Link href="#features" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          All Features
+                        </Link>
+                        <Link href="#features" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Advanced API
+                        </Link>
+                        <Link href="#features" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Global CDN
+                        </Link>
+                        <Link href="#features" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Enterprise Security
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Products Accordion */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setMobileAccordionOpen(mobileAccordionOpen === "products" ? null : "products")}
+                  className="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors text-lg font-medium"
+                >
+                  Products
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      mobileAccordionOpen === "products" && "rotate-180"
+                    )}
+                  />
+                </button>
+                <AnimatePresence>
+                  {mobileAccordionOpen === "products" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pl-4 space-y-2">
+                        <Link href="#products" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Dijkstra GPT
+                        </Link>
+                        <Link href="#products" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Resume Builder
+                        </Link>
+                        <Link href="#products" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Ranking Algorithm
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* About Accordion */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setMobileAccordionOpen(mobileAccordionOpen === "about" ? null : "about")}
+                  className="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors text-lg font-medium"
+                >
+                  About
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      mobileAccordionOpen === "about" && "rotate-180"
+                    )}
+                  />
+                </button>
+                <AnimatePresence>
+                  {mobileAccordionOpen === "about" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pl-4 space-y-2">
+                        <Link href="#about" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Our Mission
+                        </Link>
+                        <Link href="#about" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Team
+                        </Link>
+                        <Link href="#about" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Careers
+                        </Link>
+                        <Link href="#contact" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                          Contact Us
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Simple Links */}
+              <Link
+                href="#testimonials"
+                className="text-gray-300 hover:text-white transition-colors text-lg font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Testimonials
+              </Link>
+
               <Button
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 w-full"
                 onClick={() => {
@@ -1102,7 +1228,7 @@ export default function LandingPage() {
           </div>*/}
         </div>
 
-        <div className="container mx-auto px-4 relative h-[100vh] z-10">
+        <div className="container mx-auto px-4 relative min-h-screen py-20 z-10">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -1227,7 +1353,7 @@ export default function LandingPage() {
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.08),transparent_60%)]" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1325,7 +1451,7 @@ export default function LandingPage() {
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(5, 177, 5,0.1),transparent_50%)]" />
 
-        <div className="container-max mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1363,9 +1489,44 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 px-[300px] gap-8">
-            {renderAbsoluteBeginners()}
-            {renderUniversityandExperienced()}
+          {/* Timeline Path Toggle */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-gray-100 rounded-lg p-1 flex">
+              <button
+                onClick={() => setSelectedTimelinePath("beginners")}
+                className={cn(
+                  "px-6 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                  selectedTimelinePath === "beginners"
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                )}
+              >
+                Absolute Beginners
+              </button>
+              <button
+                onClick={() => setSelectedTimelinePath("university")}
+                className={cn(
+                  "px-6 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                  selectedTimelinePath === "university"
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                )}
+              >
+                University Students
+              </button>
+            </div>
+          </div>
+
+          {/* Timeline Content */}
+          <div className="px-4 md:px-8 lg:px-16 xl:px-24">
+            <div className="xl:grid xl:grid-cols-2 xl:gap-8">
+              <div className={cn("space-y-4", selectedTimelinePath !== "beginners" && "xl:block hidden")}>
+                {renderAbsoluteBeginners()}
+              </div>
+              <div className={cn("space-y-4", selectedTimelinePath !== "university" && "xl:block hidden")}>
+                {renderUniversityandExperienced()}
+              </div>
+            </div>
           </div>
 
           <div className="mt-16">
@@ -1394,7 +1555,7 @@ export default function LandingPage() {
       <section id="features" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.12),transparent_60%)]" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1727,7 +1888,7 @@ export default function LandingPage() {
       <section id="products" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(5, 177, 5,0.1),transparent_50%)]" />
 
-        <div className="container-max mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1746,8 +1907,7 @@ export default function LandingPage() {
           </div>
 
           <div className="space-y-24">
-            {/* TechNova Cloud */}
-            <div className="grid md:grid-cols-2 px-[300px] gap-12 items-center">
+            <div className="grid md:grid-cols-2 px-4 md:px-8 lg:px-16 xl:px-24 gap-12 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -1792,22 +1952,21 @@ export default function LandingPage() {
                 transition={{ duration: 0.8 }}
               >
                 <div className="bg-gradient-to-br from-green-500/20 to-gray-500/20 p-1 rounded-lg">
-                  <div className="relative h-[300px] md:h-auto w-full rounded-lg overflow-hidden">
+                  <div className="relative h-[250px] md:h-[300px] lg:h-auto w-full rounded-lg overflow-hidden">
                     {/* <CloudPlatform /> */}
                     <Image
                       src="/dijkstra-gpt.png"
-                      alt="Hero Image"
+                      alt="Dijkstra GPT Interface"
                       width={1200}
                       height={1200}
-                      className="max-w-full h-auto rounded-lg shadow-lg"
+                      className="max-w-full h-full object-cover rounded-lg shadow-lg"
                     />
                   </div>
                 </div>
               </motion.div>
             </div>
 
-            {/* TechNova Analytics */}
-            <div className="grid md:grid-cols-2 px-[300px] gap-8 md:gap-12 items-center">
+            <div className="grid md:grid-cols-2 px-4 md:px-8 lg:px-16 xl:px-24 gap-8 md:gap-12 items-center">
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -1854,22 +2013,21 @@ export default function LandingPage() {
                 className="order-2 md:order-first"
               >
                 <div className="bg-gradient-to-br from-green-500/20 to-gray-500/20 p-1 rounded-lg">
-                  <div className="relative h-[300px] md:h-auto w-full rounded-lg overflow-hidden">
+                  <div className="relative h-[250px] md:h-[300px] lg:h-auto w-full rounded-lg overflow-hidden">
                     {/* <AnalyticsPlatform /> */}
                     <Image
                       src="/dashboard.png"
-                      alt="Hero Image"
+                      alt="Dijkstra Analytics Dashboard"
                       width={1200}
                       height={1200}
-                      className="max-w-full h-auto rounded-lg shadow-lg"
+                      className="max-w-full h-full object-cover rounded-lg shadow-lg"
                     />
                   </div>
                 </div>
               </motion.div>
             </div>
 
-            {/* TechNova Security */}
-            <div className="grid md:grid-cols-2 px-[300px] gap-8 md:gap-12 items-center">
+            <div className="grid md:grid-cols-2 px-4 md:px-8 lg:px-16 xl:px-24 gap-8 md:gap-12 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -1916,28 +2074,28 @@ export default function LandingPage() {
                 className="order-2 md:order-2"
               >
                 <div className="bg-gradient-to-br from-green-500/20 to-gray-500/20 p-1 rounded-lg">
-                  <div className="relative h-[300px] md:h-[400px] w-full rounded-lg overflow-hidden">
+                  <div className="relative h-[250px] md:h-[400px] w-full rounded-lg overflow-hidden">
                     {/* <SecurityPlatform /> */}
-                    <div className="flex items-center justify-center h-full gap-4">
+                    <div className="flex items-center justify-center h-full gap-2 md:gap-4">
                       <Image
                         src="/mobile1.png"
-                        alt="Hero Image 1"
-                        width={150}
-                        height={300}
+                        alt="Mobile App Screenshot 1"
+                        width={120}
+                        height={240}
                         className="rounded-lg shadow-lg object-contain"
                       />
                       <Image
                         src="/mobile2.jpeg"
-                        alt="Hero Image 2"
-                        width={150}
-                        height={300}
+                        alt="Mobile App Screenshot 2"
+                        width={120}
+                        height={240}
                         className="rounded-lg shadow-lg object-contain"
                       />
                       <Image
                         src="/mobile3.jpeg"
-                        alt="Hero Image 3"
-                        width={150}
-                        height={300}
+                        alt="Mobile App Screenshot 3"
+                        width={120}
+                        height={240}
                         className="rounded-lg shadow-lg object-contain"
                       />
                     </div>
@@ -1952,11 +2110,11 @@ export default function LandingPage() {
       {/* Testimonials Section */}
       <section
         id="testimonials"
-        className="py-24 relative overflow-hidden px-[300px]"
+        className="py-24 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(5, 177, 5,0.1),transparent_50%)]" />
 
-        <div className="container-max mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -2037,8 +2195,8 @@ export default function LandingPage() {
       <section id="about" className="py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5, 177, 5,0.1),transparent_60%)]" />
 
-        <div className="container-max mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 px-[300px] gap-8 md:gap-12 items-center">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -2104,7 +2262,7 @@ export default function LandingPage() {
 
       <section
         id="features"
-        className="py-16 bg-white relative overflow-hidden h-[80vh]"
+        className="py-16 bg-white relative overflow-hidden min-h-[80vh]"
       >
         <div className="container mx-auto px-4 relative z-10">
           <div className="relative">
@@ -2164,8 +2322,8 @@ export default function LandingPage() {
           {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.06),transparent_70%)]" /> */}
         </div>
 
-        <div className="container relative z-10 mx-auto px-6">
-          <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-20 items-start">
+        <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 lg:gap-20 items-start">
             {/* Left Column */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -2221,7 +2379,7 @@ export default function LandingPage() {
               </div>
 
               {/* Resource cards */}
-              <div className="grid items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid items-center gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   {
                     title: "Knowledgebase",
@@ -2304,7 +2462,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 border-t border-gray-800/50 px-[300px] relative overflow-hidden">
+      <footer className="py-16 border-t border-gray-800/50 px-4 md:px-8 lg:px-16 xl:px-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(5, 177, 5,0.1),transparent_70%)]" />
 
         <div className="container mx-auto px-4 relative z-10">

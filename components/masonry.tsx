@@ -240,7 +240,7 @@ const Masonry: React.FC<MasonryProps> = ({
   }, [grid]);
 
   return (
-    <div ref={containerRef} className="relative px-[50px] w-full h-full">
+    <div ref={containerRef} className="relative px-4 md:px-8 lg:px-12 w-full h-full">
       {grid.map((item) => (
         <a href={item.url} target="_blank" rel="noopener noreferrer">
           <div
