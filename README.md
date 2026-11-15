@@ -62,11 +62,14 @@ components/
   landing-page.tsx        Composes the home page from sections
   landing/                One file per home-page section (hero, principles, â€¦)
   site/                   Shared chrome: header (mega menu + mobile menu), footer
+  showcase/               Animated product preview used in the hero (live-rendered
+                          Dijkstra Web frames: dashboard, GPT, ranking, â€¦)
+hooks/                    use-count-up, use-streaming-text, use-media-query, â€¦
   ui/                     shadcn/ui primitives
 lib/
   site.ts                 Single source of truth for URLs and external links
   seeded-random.ts        Deterministic PRNG for SSR-safe decorative randomness
-public/                   Static assets
+public/                   Static assets (ranks/ and specializations/ come from Dijkstra Web)
 ```
 
 ### Conventions
@@ -75,6 +78,9 @@ public/                   Static assets
 - **No `Math.random()` / `new Date()` during render.** Anything rendered on the
   server must produce the same markup on the client; use `lib/seeded-random.ts`
   or compute client-only values inside `useEffect`.
+- **Motion must be optional.** Auto-playing UI pauses on hover/focus, when
+  off-screen and when the tab is hidden, offers a pause button, and respects
+  `prefers-reduced-motion` (see `components/showcase/hero-showcase.tsx`).
 - **Links are links.** Use `<a>` / `<Link>` (optionally via `<Button asChild>`)
   instead of `onClick={() => window.location.href = â€¦}` so that middle-click,
   "open in new tab" and crawlers work.

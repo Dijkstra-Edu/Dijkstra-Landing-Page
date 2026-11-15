@@ -1,49 +1,57 @@
 "use client";
 
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { platformLinks } from "@/lib/site";
 
+/**
+ * The showcase renders charts (recharts) and animations, none of which are
+ * useful on the server, so it is loaded client-side only. The skeleton has
+ * the exact same footprint to avoid layout shift.
+ */
+const HeroShowcase = dynamic(
+  () =>
+    import("@/components/showcase/hero-showcase").then((m) => m.HeroShowcase),
+  { ssr: false, loading: () => <ShowcaseSkeleton /> },
+);
+
+function ShowcaseSkeleton() {
+  return (
+    <div aria-hidden>
+      <div className="flex h-[540px] overflow-hidden rounded-xl border border-white/10 bg-black md:h-[560px] lg:h-[600px]">
+        <div className="hidden w-44 shrink-0 flex-col gap-2 p-4 lg:flex">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="h-3 rounded bg-white/10" />
+          ))}
+        </div>
+        <div className="m-2 flex-1 animate-pulse rounded-xl bg-white/90" />
+      </div>
+      <div className="mt-4 grid grid-cols-5 gap-2">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-9 rounded-lg border border-white/10" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Hero() {
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden">
+    <section className="relative overflow-hidden pb-20 pt-32">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-[#048304]/20" />
-        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-black via-[#048304]/10 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5, 177, 5,0.1),transparent_65%)]" />
-        {/* Sparkling Stars 
-        <div className="absolute inset-0 overflow-hidden">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-white rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
-              }}
-              transition={{
-                duration: Math.random() * 6 + 2,
-                repeat: Number.POSITIVE_INFINITY,
-                delay: Math.random() * 5,
-              }}
-            />
-          ))}
-        </div>*/}
+        <div className="absolute left-0 right-0 top-0 h-[500px] bg-gradient-to-b from-black via-[#048304]/10 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 relative min-h-screen py-20 z-10">
-        <div className="max-w-4xl mx-auto text-center mb-16">
+      <div className="container relative z-10 mx-auto min-h-screen px-4 py-20">
+        <div className="mx-auto mb-16 max-w-4xl text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white  to-white bg-clip-text text-transparent leading-tight"
+            className="mb-6 text-4xl font-bold leading-tight text-white sm:text-5xl md:text-7xl"
           >
             Your Career in Software
             <br /> Starts Here
@@ -52,7 +60,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto"
+            className="mx-auto mb-10 max-w-2xl text-base text-gray-300 sm:text-lg md:text-xl"
           >
             Welcome to Dijkstra, an open source free for all platform designed
             to help you crack software engineering jobs with ease.
@@ -61,65 +69,41 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
             <Button
-              className="group bg-green-700 hover:bg-green-800 cursor-pointer text-white px-8 py-6 rounded-xl text-base font-semibold transition-colors duration-300"
+              className="group rounded-xl bg-green-700 px-8 py-6 text-base font-semibold text-white transition-colors duration-300 hover:bg-green-800"
               asChild
             >
               <a href={platformLinks.onboarding}>
-                <span className="flex items-center gap-2">
-                  Get Started Now
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </span>
+                Get Started Now
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
-
             <Button
               variant="ghost"
-              className="group px-8 py-6 rounded-xl text-base font-medium cursor-pointer text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-300"
+              className="group rounded-xl px-8 py-6 text-base font-medium text-gray-400 transition-all duration-300 hover:bg-white/5 hover:text-white"
               asChild
             >
               <a href={platformLinks.dashboard}>
-                <span className="flex items-center gap-2">
-                  Go to Dashboard
-                  <svg
-                    className="h-5 w-5 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </span>
+                Go to Dashboard
+                <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
           </motion.div>
         </div>
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="relative w-full max-w-5xl mx-auto"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg blur-3xl" />
-            <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-lg overflow-hidden shadow-2xl">
-              <Image
-                src="/dashboard.png"
-                alt="Hero Image"
-                width={1200}
-                height={1200}
-                className="max-w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
-          </motion.div>
-        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="relative mx-auto w-full max-w-6xl"
+        >
+          <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-green-500/20 via-emerald-400/10 to-green-700/20 blur-3xl" />
+          <div className="relative">
+            <HeroShowcase />
+          </div>
+        </motion.div>
       </div>
     </section>
   );

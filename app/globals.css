@@ -3,6 +3,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Hero showcase: the progress bar animation also drives auto-advance. */
+@theme {
+  --animate-showcase-progress: showcase-progress 1s linear forwards;
+
+  @keyframes showcase-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
