@@ -159,9 +159,26 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Anchored sections must not hide under the fixed header. */
+  section[id],
+  [id$="-heading"] {
+    scroll-margin-top: 6rem;
+  }
+  ::selection {
+    background-color: rgb(4 131 4 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 

@@ -9,37 +9,33 @@ import {
   Users,
   Workflow,
 } from "lucide-react";
+import { SectionHeading } from "./section-heading";
 
 export function Principles() {
   return (
     <section
       id="what-is-dijkstra"
-      className="py-24 relative overflow-hidden bg-gradient-to-b from-white to-gray-50"
+      aria-labelledby="what-is-dijkstra-heading"
+      className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 py-20 md:py-28"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.08),transparent_60%)]" />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900">
-              So what's Dijkstra?
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Dijkstra is a one-stop, open-source platform for aspiring Software
-              Engineers to prepare and crack jobs in todayâ€™s competitive
-              landscape.
-              <br /> <br />
-              At its core, Dijkstra works on the following principles:
-            </p>
-          </motion.div>
-        </div>
+        <SectionHeading
+          id="what-is-dijkstra-heading"
+          tone="light"
+          eyebrow="Principles"
+          title="So what's Dijkstra?"
+          description={
+            <>
+              Dijkstra is a one-stop, open-source platform for aspiring software
+              engineers to prepare for â€” and crack â€” jobs in today&apos;s
+              competitive landscape. At its core, it works on six principles.
+            </>
+          }
+        />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {[
             {
               icon: <Eye className="h-6 w-6 text-purple-500" />,
@@ -85,7 +81,7 @@ export function Principles() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="h-full bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+              <div className="h-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-8">
                 <div className="mb-6 flex items-center justify-center w-14 h-14 rounded-xl bg-gray-100">
                   {feature.icon}
                 </div>

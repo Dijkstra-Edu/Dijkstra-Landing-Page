@@ -36,7 +36,7 @@ const segments = buildSegments();
 
 export function MissionBanner() {
   return (
-    <section className="relative h-[40vh] flex items-center justify-center overflow-hidden bg-white">
+    <section className="relative flex h-[40vh] min-h-[260px] max-h-[440px] items-center justify-center overflow-hidden bg-white">
       {/* Background Segments */}
       <div className="absolute inset-0 z-0">
         {segments.map((seg, i) => (

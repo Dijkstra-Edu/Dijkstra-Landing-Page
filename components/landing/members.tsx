@@ -23,26 +23,26 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
   return (
     <section
       id="members"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative overflow-hidden py-20 md:py-28"
       aria-labelledby="members-heading"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5,177,5,0.1),transparent_60%)]" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="grid gap-10 xl:grid-cols-12 xl:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-4"
+            className="max-w-3xl xl:col-span-4 xl:max-w-none"
           >
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-green-500">
               Current members
             </p>
             <h2
               id="members-heading"
-              className="mb-5 text-3xl font-bold md:text-4xl lg:text-5xl"
+              className="mb-5 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
             >
               The people building Dijkstra
             </h2>
@@ -56,9 +56,9 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
               first to join.
             </p>
 
-            <dl className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
+            <dl className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-2">
               {stats.people !== null && (
-                <div className="col-span-2 rounded-xl border border-green-500/20 bg-green-500/[0.06] px-4 py-3 sm:col-span-4 lg:col-span-2">
+                <div className="col-span-2 rounded-xl border border-green-500/20 bg-green-500/[0.06] px-4 py-3 sm:col-span-4 xl:col-span-2">
                   <dt className="text-xs text-green-300/80">
                     People on a team
                   </dt>
@@ -84,7 +84,7 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
               <TeamsSourceBadge snapshot={teams} />
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row xl:flex-col 2xl:flex-row">
               <Button
                 className="bg-green-700 text-white hover:bg-green-800"
                 asChild
@@ -110,7 +110,7 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="min-w-0 lg:col-span-8"
+            className="min-w-0 xl:col-span-8"
           >
             <TeamExplorer snapshot={teams} />
           </motion.div>

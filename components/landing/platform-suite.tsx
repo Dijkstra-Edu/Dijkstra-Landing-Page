@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/features/status-badge";
 import type { FeatureStatus } from "@/content/features";
 import { cn } from "@/lib/utils";
+import { SectionHeading } from "./section-heading";
 import { siteConfig } from "@/lib/site";
 
 type SuiteItem = {
@@ -93,33 +94,28 @@ const suite: SuiteItem[] = [
 
 export function PlatformSuite() {
   return (
-    <section id="products" className="relative overflow-hidden py-24">
+    <section
+      id="products"
+      aria-labelledby="products-heading"
+      className="relative overflow-hidden py-20 md:py-28"
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(5,177,5,0.1),transparent_50%)]" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-16 text-center"
-        >
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            The Dijkstra Platform Suite
-          </h2>
-          <p className="mx-auto max-w-2xl text-gray-400">
-            The products students use every day â€” built in the open, by
-            students, on top of Dijkstra&apos;s backend services.
-          </p>
-        </motion.div>
+        <SectionHeading
+          id="products-heading"
+          eyebrow="Products"
+          title="The Dijkstra Platform Suite"
+          description="The products students use every day â€” built in the open, by students, on top of Dijkstra's backend services."
+        />
 
-        <div className="space-y-24">
+        <div className="space-y-20 md:space-y-28">
           {suite.map((item, index) => {
             const reversed = index % 2 === 1;
             return (
               <div
                 key={item.title}
-                className="grid items-center gap-8 px-0 md:grid-cols-2 md:gap-12 md:px-8 lg:px-16 xl:px-24"
+                className="grid items-center gap-8 md:grid-cols-2 md:gap-12 lg:px-8 xl:px-16"
               >
                 <motion.div
                   initial={{ opacity: 0, x: reversed ? 50 : -50 }}

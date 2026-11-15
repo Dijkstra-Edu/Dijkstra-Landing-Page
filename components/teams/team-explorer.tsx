@@ -319,7 +319,7 @@ function TeamDetailPanel({
         </div>
       </div>
 
-      <dl className="grid grid-cols-3 gap-2">
+      <dl className="grid grid-cols-3 gap-2 text-balance">
         {[
           ["Direct members", node.memberCount],
           ["Incl. sub-teams", node.subtreeMemberCount],
@@ -401,7 +401,7 @@ function TeamDetailPanel({
         href={node.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white"
+        className="inline-flex flex-wrap items-center gap-x-1.5 text-sm text-neutral-400 hover:text-white"
       >
         View on GitHub <ExternalLink className="h-3.5 w-3.5" />
         <span className="text-xs text-neutral-600">(organisation members)</span>
@@ -743,7 +743,7 @@ export function TeamExplorer({
         )}
       </div>
 
-      <div className="grid md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
         <div className="border-b border-white/10 p-2 md:border-b-0 md:border-r">
           <TeamTree
             roots={treeRoots}

@@ -20,7 +20,7 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
   const animationDirection = direction === "left" ? "reverse" : "normal"
 
   return (
-    <div className="relative">
+    <div className="relative" role="img" aria-label="Logos of companies where Dijkstra members have worked">
       <div
         className={cn("group flex overflow-hidden", className)}
         style={
@@ -41,11 +41,11 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
           {[...Array(3)].map((_, setIndex) => (
             <div key={`set-${setIndex}`} className="flex shrink-0">
               {logos.map((src, idx) => (
-                <div key={`${setIndex}-${idx}`} className="mx-8 flex items-center">
+                <div key={`${setIndex}-${idx}`} className="mx-5 flex items-center sm:mx-8">
                   <img
                     src={src || "/placeholder.svg"}
-                    alt={`Company logo ${idx + 1}`}
-                    className="h-16 w-auto filter grayscale hover:grayscale-0 transition duration-300 ease-in-out"
+                    alt=""
+                    className="h-10 w-auto filter grayscale hover:grayscale-0 transition duration-300 ease-in-out sm:h-14"
                   />
                 </div>
               ))}

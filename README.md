@@ -26,7 +26,7 @@
 |---|---|
 | Framework | Next.js 14 (App Router) |
 | UI | React 18, Tailwind CSS v4, shadcn/ui (Radix) |
-| Motion | framer-motion, GSAP |
+| Motion | framer-motion (respecting `prefers-reduced-motion`) |
 | Fonts | Geist (bundled via the `geist` package â€” no network needed at build time) |
 
 ## Getting started

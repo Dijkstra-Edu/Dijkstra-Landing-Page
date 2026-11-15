@@ -171,7 +171,6 @@ export const legalDocs: LegalDoc[] = [
           "Recharts â€” MIT License",
           "Lucide icons â€” ISC License; Tabler icons â€” MIT License",
           "date-fns â€” MIT License",
-          "GSAP â€” GreenSock Standard License",
           "Geist font â€” SIL Open Font License 1.1",
         ],
       },

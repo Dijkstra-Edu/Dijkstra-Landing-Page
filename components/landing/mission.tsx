@@ -2,42 +2,50 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { SectionHeading } from "./section-heading";
 
 export function Mission() {
   return (
-    <section id="mission" className=" bg-white relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+    <section
+      id="mission"
+      aria-labelledby="mission-heading"
+      className="relative overflow-hidden bg-gray-50 pb-10 pt-20 md:pb-14 md:pt-28"
+    >
+      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+        <SectionHeading
+          id="mission-heading"
+          tone="light"
+          eyebrow="Our mission"
+          title="Prepare actively, not passively"
+          className="mb-8 md:mb-10"
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mx-auto max-w-3xl space-y-5 text-center text-base leading-relaxed text-gray-700 sm:text-lg"
+        >
+          <p>
+            It&apos;s 2025, and entry-level roles have become nothing short of a
+            bloodbath: loads of students left without jobs, a natural saturation
+            of the field, AI taking over roles â€” quite a lot happening at once.
+            We at Dijkstra firmly believe that it is still possible to land
+            well-compensated jobs in tech, irrespective of everything happening
+            in the world today.
+          </p>
+          <p className="font-medium text-gray-900">
+            We want you to get back to your roots, and to systematically
+            approach preparing for software engineering â€” actively, not
+            passively.
+          </p>
+          <Link
+            href="/mission"
+            className="inline-flex items-center gap-2 pt-2 text-sm font-semibold text-green-700 hover:text-green-600"
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black">
-              Our Mission
-            </h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">
-              IIt's 2025, and entry level roles have become nothing short of a
-              bloodbath. Loads of students left without jobs, a natural
-              saturation of the field, AI taking over roles... Quite a lot
-              happening at once. We at Dijkstra firmly believe that it is
-              possible to still land well compensated jobs in the field of tech,
-              irrespective of everything happening in the world today.
-              {/* button to redirect to Dijkstra's Mission as well as About Us */}
-              <br />
-              We want you to get back to your roots, and to systematically
-              approach preapring for Software Engineering; ACTIVELY, not
-              PASSIVELY.
-            </p>
-            <Link
-              href="/mission"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-green-700 hover:text-green-600"
-            >
-              Read our mission â†’
-            </Link>
-          </motion.div>
-        </div>
+            Read our mission â†’
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

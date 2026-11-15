@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { moreFeatures } from "@/content/features";
 import { FeatureStream } from "@/components/features/feature-stream";
 import { StatusBadge } from "@/components/features/status-badge";
+import { SectionHeading } from "./section-heading";
 
 /** Bento spans for the six "more features" cards (lg and up). */
 const bentoSpan = [
@@ -21,33 +22,18 @@ export function Features() {
   return (
     <section
       id="features"
-      className="relative overflow-hidden py-24"
+      className="relative overflow-hidden py-20 md:py-28"
       aria-labelledby="features-heading"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.12),transparent_60%)]" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mx-auto mb-14 max-w-2xl text-center"
-        >
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-green-500">
-            Features
-          </p>
-          <h2
-            id="features-heading"
-            className="mb-5 text-4xl font-extrabold text-white md:text-5xl"
-          >
-            Everything your preparation needs, in one place
-          </h2>
-          <p className="text-lg leading-relaxed text-gray-400">
-            Watch each part of Dijkstra stream in â€” the same building blocks you
-            will use every day on the platform.
-          </p>
-        </motion.div>
+        <SectionHeading
+          id="features-heading"
+          eyebrow="Features"
+          title="Everything your preparation needs, in one place"
+          description="Watch each part of Dijkstra stream in â€” the same building blocks you will use every day on the platform."
+        />
 
         <FeatureStream />
 

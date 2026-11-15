@@ -39,19 +39,19 @@ function ShowcaseSkeleton() {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-32">
+    <section className="relative overflow-hidden pb-16 pt-28 sm:pt-32 md:pb-24 md:pt-40">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black to-[#048304]/20" />
         <div className="absolute left-0 right-0 top-0 h-[500px] bg-gradient-to-b from-black via-[#048304]/10 to-transparent" />
       </div>
 
-      <div className="container relative z-10 mx-auto min-h-screen px-4 py-20">
-        <div className="mx-auto mb-16 max-w-4xl text-center">
+      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+        <div className="mx-auto mb-12 max-w-4xl text-center md:mb-16">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6 text-4xl font-bold leading-tight text-white sm:text-5xl md:text-7xl"
+            className="mb-6 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
             Your Career in Software
             <br /> Starts Here
@@ -62,14 +62,14 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mx-auto mb-10 max-w-2xl text-base text-gray-300 sm:text-lg md:text-xl"
           >
-            Welcome to Dijkstra, an open source free for all platform designed
-            to help you crack software engineering jobs with ease.
+            Welcome to Dijkstra â€” an open-source platform, free for every
+            student, designed to help you crack software engineering jobs.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+            className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4"
           >
             <Button
               className="group rounded-xl bg-green-700 px-8 py-6 text-base font-semibold text-white transition-colors duration-300 hover:bg-green-800"

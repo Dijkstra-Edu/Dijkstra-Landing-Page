@@ -18,6 +18,7 @@ const entries = [
       "Streaming feature showcase with an honest status for every feature.",
       "Teams and members from the Dijkstra-Edu GitHub organisation, with a public Teams API.",
       "Pages for every product, plus pricing, roadmap, blog, press, partners, legal and more.",
+      "Responsive layouts from small phones to wide screens, and a clean masonry of job-market headlines.",
       "Faster, offline-safe builds with bundled fonts and no hydration errors.",
     ],
   },
