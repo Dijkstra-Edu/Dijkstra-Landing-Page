@@ -1,137 +1,99 @@
+import Link from "next/link";
 import {
   IconBrandDiscord,
   IconBrandGithub,
   IconBrandLinkedin,
 } from "@tabler/icons-react";
 import { siteConfig } from "@/lib/site";
+import { footerNav, legalNav, type NavLink } from "@/lib/navigation";
+
+function FooterLink({ link, className }: { link: NavLink; className: string }) {
+  return link.href.startsWith("/") ? (
+    <Link href={link.href} className={className}>
+      {link.label}
+    </Link>
+  ) : (
+    <a href={link.href} className={className}>
+      {link.label}
+    </a>
+  );
+}
+
+const socials = [
+  { label: "GitHub", href: siteConfig.links.github, Icon: IconBrandGithub },
+  { label: "Discord", href: siteConfig.links.discord, Icon: IconBrandDiscord },
+  {
+    label: "LinkedIn",
+    href: siteConfig.links.linkedin,
+    Icon: IconBrandLinkedin,
+  },
+];
 
 export function SiteFooter() {
   return (
-    <footer className="bg-black text-white py-16 border-t border-gray-800/50 px-4 md:px-8 lg:px-16 xl:px-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(5, 177, 5,0.1),transparent_70%)]" />
+    <footer className="relative overflow-hidden border-t border-gray-800/50 bg-black py-14 text-white md:py-16">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(5,177,5,0.1),transparent_70%)]" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <a href="/" className="flex items-center gap-2">
-                <img src="/icon.png" alt="" className="h-12 w-auto" />
-                <span className="font-bold text-xl">Dijkstra</span>
-              </a>
-            </div>
-            <p className="text-gray-400 mb-6">
-              Building <span className="text-white">Incredible Software</span>{" "}
+      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-6 lg:gap-12">
+          <div className="col-span-2 md:col-span-3 lg:col-span-2">
+            <Link href="/" className="mb-5 inline-flex items-center gap-2">
+              <img src="/icon.png" alt="" className="h-11 w-11" />
+              <span className="text-xl font-bold">{siteConfig.name}</span>
+            </Link>
+            <p className="mb-6 max-w-xs text-gray-400">
+              Building <span className="text-white">Incredible Software</span>
               <br />
-              For <span className="text-white">Students</span>, <br />
+              For <span className="text-white">Students</span>,
+              <br />
               By <span className="text-white">Students</span>.
             </p>
-            <div className="flex space-x-4">
-              <a
-                href={siteConfig.links.github}
-                aria-label="GitHub"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <IconBrandGithub className="h-5 w-5" />
-              </a>
-              <a
-                href={siteConfig.links.discord}
-                aria-label="Discord"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <IconBrandDiscord className="h-5 w-5" />
-              </a>
-              <a
-                href={siteConfig.links.linkedin}
-                aria-label="LinkedIn"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <IconBrandLinkedin className="h-5 w-5" />
-              </a>
+            <div className="flex gap-4">
+              {socials.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="text-gray-400 transition-colors hover:text-white"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
 
-          <div>
-            <h4 className="font-bold text-lg mb-6">Get Started</h4>
-            <ul className="space-y-4">
-              {[
-                "Onboarding",
-                "Dashboard",
-                "Opportunities",
-                "API",
-                "Documentation",
-              ].map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-lg mb-6">Organization</h4>
-            <ul className="space-y-4">
-              {["Mission", "About Us", "Blog", "Press", "Partners"].map(
-                (item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-gray-400 hover:text-white transition-colors"
-                    >
-                      {item}
-                    </a>
+          {footerNav.map((column) => (
+            <nav key={column.title} aria-label={column.title}>
+              <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-300">
+                {column.title}
+              </h2>
+              <ul className="space-y-3">
+                {column.links.map((link) => (
+                  <li key={link.href + link.label}>
+                    <FooterLink
+                      link={link}
+                      className="text-sm text-gray-400 transition-colors hover:text-white"
+                    />
                   </li>
-                ),
-              )}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-lg mb-6">Legal</h4>
-            <ul className="space-y-4">
-              {["Terms", "Privacy", "Cookies", "Licenses", "Contact"].map(
-                (item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-gray-400 hover:text-white transition-colors"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ),
-              )}
-            </ul>
-          </div>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        <div className="mt-16 pt-8 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm" suppressHydrationWarning>
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800/50 pt-8 text-center md:flex-row md:text-left">
+          <p className="text-sm text-gray-400" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} JRS Studios. All rights reserved.
+            Dijkstra is open source under the Apache&nbsp;2.0 license.
           </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Cookies
-            </a>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {legalNav.map((link) => (
+              <FooterLink
+                key={link.href}
+                link={link}
+                className="text-sm text-gray-400 transition-colors hover:text-white"
+              />
+            ))}
           </div>
         </div>
       </div>

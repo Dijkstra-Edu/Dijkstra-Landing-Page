@@ -44,6 +44,8 @@ export type Feature = {
   icon: LucideIcon;
   /** Tailwind text colour used for the icon accent. */
   accent: string;
+  /** Page on this site describing the feature. */
+  href: string;
   /** Path inside Dijkstra Web, if the feature has a page there. */
   platformPath?: string;
   /** Backend services involved (see Evaluation.MD Â§3). */
@@ -54,6 +56,7 @@ export type Feature = {
 export const streamedFeatures: Feature[] = [
   {
     slug: "dashboard",
+    href: "/products/dashboard",
     name: "Proof-of-work dashboard",
     tagline: "GitHub, LeetCode and LinkedIn in one place",
     description:
@@ -71,6 +74,7 @@ export const streamedFeatures: Feature[] = [
   },
   {
     slug: "ranking",
+    href: "/products/ranking",
     name: "Helios ranking",
     tagline: "Your proof of work, turned into a rank",
     description:
@@ -88,6 +92,7 @@ export const streamedFeatures: Feature[] = [
   },
   {
     slug: "dijkstra-gpt",
+    href: "/products/dijkstra-gpt",
     name: "Dijkstra GPT",
     tagline: "A CS mentor that knows your progress",
     description:
@@ -105,6 +110,7 @@ export const streamedFeatures: Feature[] = [
   },
   {
     slug: "resume-builder",
+    href: "/products/resume-builder",
     name: "Resume & CV builder",
     tagline: "Your profile, compiled into a resume",
     description:
@@ -122,6 +128,7 @@ export const streamedFeatures: Feature[] = [
   },
   {
     slug: "opportunities",
+    href: "/products/opportunities",
     name: "Opportunities board",
     tagline: "Projects, fellowships and jobs that match you",
     description:
@@ -139,6 +146,7 @@ export const streamedFeatures: Feature[] = [
   },
   {
     slug: "blog",
+    href: "/products/blog",
     name: "Blogs & posts",
     tagline: "Your solutions, published automatically",
     description:
@@ -156,6 +164,7 @@ export const streamedFeatures: Feature[] = [
   },
   {
     slug: "teams",
+    href: "/team",
     name: "Teams & projects",
     tagline: "Work like an engineer before you are one",
     description:
@@ -177,6 +186,7 @@ export const streamedFeatures: Feature[] = [
 export const moreFeatures: Feature[] = [
   {
     slug: "onboarding",
+    href: "/knowledge-base",
     name: "Guided onboarding",
     tagline: "GitHub, Git, VS Code, Discord, LeetCode, LinkedIn",
     description:
@@ -190,6 +200,7 @@ export const moreFeatures: Feature[] = [
   },
   {
     slug: "mentorship",
+    href: "/careers",
     name: "Mentorship & community",
     tagline: "Learn, then teach",
     description:
@@ -202,6 +213,7 @@ export const moreFeatures: Feature[] = [
   },
   {
     slug: "open-source",
+    href: "/developers",
     name: "Open source by default",
     tagline: "Every line is public",
     description:
@@ -214,6 +226,7 @@ export const moreFeatures: Feature[] = [
   },
   {
     slug: "certificates",
+    href: "/roadmap",
     name: "Certificates & transcripts",
     tagline: "Backed by proof of work",
     description:
@@ -226,6 +239,7 @@ export const moreFeatures: Feature[] = [
   },
   {
     slug: "learning-hub",
+    href: "/products/learning-hub",
     name: "Learning Hub",
     tagline: "CS from the ground up",
     description:
@@ -239,6 +253,7 @@ export const moreFeatures: Feature[] = [
   },
   {
     slug: "mobile",
+    href: "/products/mobile",
     name: "Mobile apps",
     tagline: "Android and iOS, built by the community",
     description:

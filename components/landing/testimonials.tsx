@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export function Testimonials() {
@@ -81,6 +82,14 @@ export function Testimonials() {
               </div>
             </motion.div>
           ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/case-studies"
+            className="inline-flex items-center gap-2 text-sm font-medium text-green-400 hover:text-green-300"
+          >
+            Read their stories â†’
+          </Link>
         </div>
       </div>
     </section>

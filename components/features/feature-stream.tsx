@@ -2,7 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { ArrowUpRight, Check, RotateCcw } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 import { streamedFeatures, type Feature } from "@/content/features";
@@ -31,14 +32,22 @@ function FeatureDetails({ feature }: { feature: Feature }) {
           </li>
         ))}
       </ul>
-      {feature.platformPath && (
-        <a
-          href={`${siteConfig.platformUrl}${feature.platformPath}`}
-          className="inline-flex items-center gap-1 text-sm font-medium text-green-400 hover:text-green-300"
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <Link
+          href={feature.href}
+          className="inline-flex items-center gap-1 text-sm font-medium text-white hover:text-green-300"
         >
-          Open in Dijkstra Web <ArrowUpRight className="h-4 w-4" />
-        </a>
-      )}
+          Learn more <ArrowRight className="h-4 w-4" />
+        </Link>
+        {feature.platformPath && (
+          <a
+            href={`${siteConfig.platformUrl}${feature.platformPath}`}
+            className="inline-flex items-center gap-1 text-sm font-medium text-green-400 hover:text-green-300"
+          >
+            Open in Dijkstra Web <ArrowUpRight className="h-4 w-4" />
+          </a>
+        )}
+      </div>
     </div>
   );
 }

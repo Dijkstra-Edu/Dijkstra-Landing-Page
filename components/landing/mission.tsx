@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export function Mission() {
@@ -29,6 +30,12 @@ export function Mission() {
               approach preapring for Software Engineering; ACTIVELY, not
               PASSIVELY.
             </p>
+            <Link
+              href="/mission"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-green-700 hover:text-green-600"
+            >
+              Read our mission â†’
+            </Link>
           </motion.div>
         </div>
       </div>

@@ -56,6 +56,24 @@ npm run build && npm run start
 | `TEAMS_PUBLIC_MEMBERS_ONLY` | `false` | Only show people who made their org membership public (counts still include everyone). |
 | `TEAMS_REVALIDATE_SECONDS` | `3600` | Cache lifetime for team data. |
 | `GITHUB_API_URL` | `https://api.github.com` | Only for GitHub Enterprise Server or tests. |
+| `CONTACT_WEBHOOK_URL` | â€” | Where contact-form messages go: a Discord channel webhook or any JSON endpoint. Without it the form points people to Discord/LinkedIn. |
+
+## Pages and content
+
+Every link in the header, mega menus and footer resolves to a real page or a
+real external destination. Navigation lives in `lib/navigation.ts`; page copy
+lives in typed files under `content/` so non-developers can edit it:
+
+| Route | Content source |
+|---|---|
+| `/features`, home showcase | `content/features.ts` |
+| `/products`, `/products/[slug]` | `content/products.ts` (each product reuses its streaming demo) |
+| `/blog`, `/blog/[slug]` | `content/blog.ts` |
+| `/faq` | `content/faq.ts` |
+| `/legal/[slug]` (terms, privacy, cookies, licenses) | `content/legal.ts` â€” plain-language summaries that link to the authoritative documents in the Docs |
+| `/pricing`, `/roadmap`, `/integrations`, `/compare`, `/case-studies`, `/about`, `/mission`, `/careers`, `/contact`, `/press`, `/partners`, `/knowledge-base`, `/developers`, `/changelog` | the page files in `app/` |
+
+`app/sitemap.ts` lists every route; `/api/*` is excluded in `app/robots.ts`.
 
 ## Teams (GitHub integration)
 
@@ -98,7 +116,8 @@ app/                      Next.js routes
 components/
   landing-page.tsx        Composes the home page from sections
   landing/                One file per home-page section (hero, principles, â€¦)
-  site/                   Shared chrome: header (mega menu + mobile menu), footer
+  site/                   Shared chrome: header (mega menu + mobile menu), footer,
+                          page shell/hero, section, CTA band, link card, prose renderer
   showcase/               Animated product preview used in the hero (live-rendered
                           Dijkstra Web frames: dashboard, GPT, ranking, â€¦)
   features/               Streaming feature showcase (+ per-feature stream scripts)
@@ -111,6 +130,8 @@ hooks/                    use-count-up, use-streaming-text, use-safe-reduced-mot
   ui/                     shadcn/ui primitives
 lib/
   site.ts                 Single source of truth for URLs and external links
+  navigation.ts           Header mega menus, mobile menu and footer links
+  contact.ts              Contact form schema (shared by client and API)
   seeded-random.ts        Deterministic PRNG for SSR-safe decorative randomness
   teams/                  GitHub teams: client (GraphQL + REST), tree builder, snapshot seed
 public/                   Static assets (ranks/ and specializations/ come from Dijkstra Web)

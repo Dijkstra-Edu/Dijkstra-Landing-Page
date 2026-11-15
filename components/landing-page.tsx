@@ -24,7 +24,7 @@ export default function LandingPage({ teams }: { teams: TeamsSnapshot }) {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       <SiteHeader />
-      <main>
+      <main id="main">
         <Hero />
         <MissionBanner />
         <Principles />

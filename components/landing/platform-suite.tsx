@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ type SuiteItem = {
   status: FeatureStatus;
   bullets: string[];
   cta: { label: string; href: string };
+  learnMore: string;
   media:
     | { kind: "image"; src: string; alt: string }
     | { kind: "phones"; shots: { src: string; alt: string }[] };
@@ -32,6 +34,7 @@ const suite: SuiteItem[] = [
       "Remembers your conversations",
       "Built by Dijkstra's AI & ML engineering team",
     ],
+    learnMore: "/products/dijkstra-gpt",
     cta: {
       label: "Try Dijkstra GPT",
       href: `${siteConfig.platformUrl}/dijkstra-gpt`,
@@ -53,6 +56,7 @@ const suite: SuiteItem[] = [
       "Rank and XP from the Helios ranking service",
       "Contribution heatmaps and activity trends",
     ],
+    learnMore: "/products/dashboard",
     cta: {
       label: "Open your dashboard",
       href: `${siteConfig.platformUrl}/dashboard`,
@@ -74,6 +78,7 @@ const suite: SuiteItem[] = [
       "LeetCode daily and blog feed",
       "One account across web and mobile",
     ],
+    learnMore: "/products/mobile",
     cta: { label: "Follow progress on GitHub", href: siteConfig.links.github },
     media: {
       kind: "phones",
@@ -143,16 +148,25 @@ export function PlatformSuite() {
                       </li>
                     ))}
                   </ul>
-                  <Button
-                    variant="outline"
-                    className="group border-2 border-gray-700 bg-gray-900/50 text-white transition-all duration-300 hover:border-green-500 hover:bg-gray-800/50 hover:text-white"
-                    asChild
-                  >
-                    <a href={item.cta.href}>
-                      {item.cta.label}
-                      <ArrowRight className="h-4 w-4 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-green-500" />
-                    </a>
-                  </Button>
+                  <div className="flex flex-wrap gap-3">
+                    <Button
+                      variant="outline"
+                      className="group border-2 border-gray-700 bg-gray-900/50 text-white transition-all duration-300 hover:border-green-500 hover:bg-gray-800/50 hover:text-white"
+                      asChild
+                    >
+                      <Link href={item.learnMore}>
+                        Learn more
+                        <ArrowRight className="h-4 w-4 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-green-500" />
+                      </Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="text-gray-300 hover:bg-white/5 hover:text-white"
+                      asChild
+                    >
+                      <a href={item.cta.href}>{item.cta.label}</a>
+                    </Button>
+                  </div>
                 </motion.div>
 
                 <motion.div

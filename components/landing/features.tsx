@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { moreFeatures } from "@/content/features";
@@ -87,6 +88,13 @@ export function Features() {
                 <p className="mt-3 text-sm leading-relaxed text-neutral-400">
                   {feature.description}
                 </p>
+                <Link
+                  href={feature.href}
+                  className="mt-4 inline-flex text-sm font-medium text-green-400 after:absolute after:inset-0 hover:text-green-300"
+                >
+                  Learn more
+                  <span className="sr-only"> about {feature.name}</span> â†’
+                </Link>
               </motion.div>
             ))}
           </div>
