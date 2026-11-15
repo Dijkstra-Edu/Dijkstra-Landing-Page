@@ -242,9 +242,8 @@ const Masonry: React.FC<MasonryProps> = ({
   return (
     <div ref={containerRef} className="relative px-4 md:px-8 lg:px-12 w-full h-full">
       {grid.map((item) => (
-        <a href={item.url} target="_blank" rel="noopener noreferrer">
+        <a key={item.id} href={item.url} target="_blank" rel="noopener noreferrer">
           <div
-            key={item.id}
             data-key={item.id}
             className="absolute box-content cursor-pointer"
             style={{ willChange: "transform, width, height, opacity" }}
