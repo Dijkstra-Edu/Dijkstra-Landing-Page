@@ -1,73 +1,118 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TeamVisualization } from "@/components/interactive/team-visualization";
+import {
+  TeamExplorer,
+  TeamsSourceBadge,
+} from "@/components/teams/team-explorer";
+import { joinTeamUrl } from "@/components/teams/links";
+import type { TeamsSnapshot } from "@/lib/teams/types";
 
-export function Members() {
+export function Members({ teams }: { teams: TeamsSnapshot }) {
+  const { stats } = teams;
+  const figures = [
+    { label: "Departments", value: stats.departments },
+    { label: "Groups", value: stats.groups },
+    { label: "Teams", value: stats.teams },
+    { label: "Projects", value: stats.projects },
+  ];
+
   return (
-    <section id="members" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5, 177, 5,0.1),transparent_60%)]" />
+    <section
+      id="members"
+      className="relative overflow-hidden py-16 md:py-24"
+      aria-labelledby="members-heading"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5,177,5,0.1),transparent_60%)]" />
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-1 md:order-1"
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-4"
           >
-            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold mb-4 md:mb-6">
-              Current Members
-            </h2>
-            <p className="text-gray-300 mb-4 md:mb-6 text-sm sm:text-base md:text-lg">
-              Founded in 2023, Dijkstra was created with a singular vision: to
-              democratize access to cutting-edge technology. We believe that
-              powerful tools should be accessible to everyone, regardless of
-              technical expertise.
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-green-500">
+              Current members
             </p>
-            <p className="text-gray-300 mb-4 md:mb-6 text-sm sm:text-base md:text-lg">
-              Our team of passionate engineers and designers work tirelessly to
-              create intuitive, powerful solutions that solve real-world
-              problems and empower our users to achieve more.
-            </p>
-            <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 mb-6 md:mb-8">
-              <div className="bg-gray-800/50 backdrop-blur-sm px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base">
-                <span className="text-green-400 font-medium">50+</span> Team
-                Members
-              </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base">
-                <span className="text-green-400 font-medium">10k+</span>{" "}
-                Customers
-              </div>
-              <div className="bg-gray-800/50 backdrop-blur-sm px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base">
-                <span className="text-green-400 font-medium">99.9%</span> Uptime
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              className="border-green-500 text-green-500 hover:bg-green-950 text-sm sm:text-base bg-transparent"
+            <h2
+              id="members-heading"
+              className="mb-5 text-3xl font-bold md:text-4xl lg:text-5xl"
             >
-              Learn More About Us
-            </Button>
+              The people building Dijkstra
+            </h2>
+            <p className="mb-4 text-base text-gray-300 md:text-lg">
+              Dijkstra is organised like an engineering company. Every team here
+              is a real team in the {teams.org} GitHub organisation â€”
+              departments, groups, teams and the projects they ship.
+            </p>
+            <p className="mb-6 text-base text-gray-400">
+              Pick a team to see who is in it, or spot an open team and be the
+              first to join.
+            </p>
+
+            <dl className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
+              {stats.people !== null && (
+                <div className="col-span-2 rounded-xl border border-green-500/20 bg-green-500/[0.06] px-4 py-3 sm:col-span-4 lg:col-span-2">
+                  <dt className="text-xs text-green-300/80">
+                    People on a team
+                  </dt>
+                  <dd className="text-3xl font-semibold tabular-nums text-white">
+                    {stats.people}
+                  </dd>
+                </div>
+              )}
+              {figures.map((f) => (
+                <div
+                  key={f.label}
+                  className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                >
+                  <dt className="text-xs text-neutral-500">{f.label}</dt>
+                  <dd className="text-2xl font-semibold tabular-nums text-white">
+                    {f.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mb-8">
+              <TeamsSourceBadge snapshot={teams} />
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <Button
+                className="bg-green-700 text-white hover:bg-green-800"
+                asChild
+              >
+                <Link href="/team">
+                  Explore all teams <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="border-green-500/60 bg-transparent text-green-400 hover:bg-green-950 hover:text-green-300"
+                asChild
+              >
+                <a href={joinTeamUrl}>
+                  <UserPlus className="h-4 w-4" /> Join a team
+                </a>
+              </Button>
+            </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-2 md:order-2"
+            transition={{ duration: 0.7 }}
+            className="min-w-0 lg:col-span-8"
           >
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-green-500/20 to-gray-500/20 rounded-lg blur-xl" />
-              <div className="relative rounded-lg overflow-hidden">
-                <div className="w-full h-[300px] md:h-[400px]">
-                  <TeamVisualization />
-                </div>
-              </div>
-            </div>
+            <TeamExplorer snapshot={teams} />
           </motion.div>
         </div>
       </div>

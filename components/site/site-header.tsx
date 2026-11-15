@@ -561,7 +561,7 @@ export function SiteHeader() {
                           </a>
 
                           <a
-                            href="/#members"
+                            href="/team"
                             className="block p-3 rounded-lg hover:bg-white/5 transition-colors"
                           >
                             <div className="font-medium mb-1 hover:text-[#048304] transition-colors">
@@ -797,7 +797,7 @@ export function SiteHeader() {
                           Our Mission
                         </Link>
                         <Link
-                          href="/#members"
+                          href="/team"
                           className="block text-gray-400 hover:text-white transition-colors text-sm"
                           onClick={() => setIsMenuOpen(false)}
                         >

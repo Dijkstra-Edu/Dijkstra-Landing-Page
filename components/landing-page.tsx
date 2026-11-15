@@ -13,13 +13,14 @@ import { Members } from "@/components/landing/members";
 import { JobMarket } from "@/components/landing/job-market";
 import { Mission } from "@/components/landing/mission";
 import { Contact } from "@/components/landing/contact";
+import type { TeamsSnapshot } from "@/lib/teams/types";
 
 /**
  * The landing page is composed of self-contained section components
  * (see `components/landing/*`). Shared chrome (header / footer) lives in
  * `components/site/*` so that every sub-page can reuse it.
  */
-export default function LandingPage() {
+export default function LandingPage({ teams }: { teams: TeamsSnapshot }) {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       <SiteHeader />
@@ -31,7 +32,7 @@ export default function LandingPage() {
         <Features />
         <PlatformSuite />
         <Testimonials />
-        <Members />
+        <Members teams={teams} />
         <JobMarket />
         <Mission />
         <Contact />

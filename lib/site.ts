@@ -32,6 +32,13 @@ export const siteConfig = {
   },
 } as const;
 
+/** Docs pages the site links to. */
+export const docsLinks = {
+  joinDijkstra: `${siteConfig.docsUrl}/getting-started/onboarding/join-djikstra/`,
+  onboarding: `${siteConfig.docsUrl}/getting-started/onboarding/onboarding/`,
+  contributing: `${siteConfig.docsUrl}/getting-started/contributors/contribution-guidelines/`,
+} as const;
+
 /** Deep links into the Dijkstra Web platform. */
 export const platformLinks = {
   login: `${siteConfig.platformUrl}/login`,
