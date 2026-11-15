@@ -64,7 +64,12 @@ components/
   site/                   Shared chrome: header (mega menu + mobile menu), footer
   showcase/               Animated product preview used in the hero (live-rendered
                           Dijkstra Web frames: dashboard, GPT, ranking, â€¦)
-hooks/                    use-count-up, use-streaming-text, use-media-query, â€¦
+  features/               Streaming feature showcase (+ per-feature stream scripts)
+  streaming/              Streaming-UI primitives: StreamSequence, StreamingText, Shimmer
+  motion/                 Lightweight motion helpers (CountUp, SVG sparkline)
+content/                  Typed site content (features.ts is the single source of truth
+                          for feature names, descriptions and Live/Beta/â€¦ status)
+hooks/                    use-count-up, use-streaming-text, use-safe-reduced-motion, â€¦
   ui/                     shadcn/ui primitives
 lib/
   site.ts                 Single source of truth for URLs and external links
@@ -81,6 +86,10 @@ public/                   Static assets (ranks/ and specializations/ come from D
 - **Motion must be optional.** Auto-playing UI pauses on hover/focus, when
   off-screen and when the tab is hidden, offers a pause button, and respects
   `prefers-reduced-motion` (see `components/showcase/hero-showcase.tsx`).
+- **Keep chart libraries out of the main bundle.** `recharts` is only used by the
+  lazily-loaded hero showcase; elsewhere use `components/motion/*`.
+- **Be honest about status.** Every feature carries a status (`live`, `beta`,
+  `in-development`, `planned`) in `content/features.ts`; update it as work lands.
 - **Links are links.** Use `<a>` / `<Link>` (optionally via `<Button asChild>`)
   instead of `onClick={() => window.location.href = â€¦}` so that middle-click,
   "open in new tab" and crawlers work.

@@ -3,9 +3,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Hero showcase: the progress bar animation also drives auto-advance. */
+/* Motion tokens. The showcase progress animation also drives auto-advance. */
 @theme {
   --animate-showcase-progress: showcase-progress 1s linear forwards;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
 
   @keyframes showcase-progress {
     from {

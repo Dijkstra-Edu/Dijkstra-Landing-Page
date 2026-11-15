@@ -15,8 +15,10 @@ import {
 } from "recharts";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useCountUp } from "@/hooks/use-count-up";
+import { CountUp } from "@/components/motion/count-up";
 import type { ActivityPoint } from "./data";
+
+export { CountUp };
 
 /* -------------------------------------------------------------------------- */
 /* Layout primitives                                                          */
@@ -75,25 +77,6 @@ export function TrendBadge({
       <Icon className="h-3 w-3" />
       {value}
     </span>
-  );
-}
-
-export function CountUp({
-  value,
-  delay = 0,
-  duration = 1200,
-  format = (n: number) => n.toLocaleString("en-US"),
-  className,
-}: {
-  value: number;
-  delay?: number;
-  duration?: number;
-  format?: (n: number) => string;
-  className?: string;
-}) {
-  const current = useCountUp(value, { delay, duration });
-  return (
-    <span className={cn("tabular-nums", className)}>{format(current)}</span>
   );
 }
 
