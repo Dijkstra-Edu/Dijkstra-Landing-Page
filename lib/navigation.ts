@@ -22,8 +22,6 @@ export type NavLink = {
   href: string;
   description?: string;
   icon?: LucideIcon;
-  /** Tailwind classes for the icon tile. */
-  tone?: string;
   external?: boolean;
 };
 
@@ -80,21 +78,18 @@ export const mainNav: NavItem[] = [
               href: "/products/dashboard",
               description: "GitHub, LeetCode and LinkedIn in one place",
               icon: Gauge,
-              tone: "bg-emerald-500/10 text-emerald-400",
             },
             {
               label: "Helios ranking",
               href: "/products/ranking",
               description: "Your proof of work, turned into a rank",
               icon: Trophy,
-              tone: "bg-amber-500/10 text-amber-400",
             },
             {
               label: "Dijkstra GPT",
               href: "/products/dijkstra-gpt",
               description: "A CS mentor that knows your progress",
               icon: Bot,
-              tone: "bg-sky-500/10 text-sky-400",
             },
           ],
         },
@@ -106,21 +101,18 @@ export const mainNav: NavItem[] = [
               href: "/products/resume-builder",
               description: "Your profile, compiled into a resume",
               icon: FileText,
-              tone: "bg-rose-500/10 text-rose-400",
             },
             {
               label: "Opportunities board",
               href: "/products/opportunities",
               description: "Projects, fellowships and jobs that fit",
               icon: Compass,
-              tone: "bg-violet-500/10 text-violet-400",
             },
             {
               label: "Teams & projects",
               href: "/team",
               description: "Ship real software with mentors",
               icon: Users,
-              tone: "bg-lime-500/10 text-lime-400",
             },
           ],
         },
@@ -148,28 +140,24 @@ export const mainNav: NavItem[] = [
               href: "/products/dijkstra-gpt",
               description: "AI mentor for CS and careers",
               icon: Bot,
-              tone: "bg-green-500/10 text-green-400",
             },
             {
               label: "Resume Builder",
               href: "/products/resume-builder",
               description: "Resumes and CVs from your profile",
               icon: FileText,
-              tone: "bg-red-500/10 text-red-400",
             },
             {
               label: "Ranking Algorithm",
               href: "/products/ranking",
               description: "Helios: XP and tiers from real work",
               icon: Trophy,
-              tone: "bg-yellow-500/10 text-yellow-400",
             },
             {
               label: "Dijkstra Blog",
               href: "/products/blog",
               description: "Articles and auto-published solutions",
               icon: Newspaper,
-              tone: "bg-blue-500/10 text-blue-400",
             },
           ],
         },
@@ -181,21 +169,18 @@ export const mainNav: NavItem[] = [
               href: "/products/universities",
               description: "Student progress and placement readiness",
               icon: GraduationCap,
-              tone: "bg-sky-500/10 text-sky-400",
             },
             {
               label: "Companies",
               href: "/products/companies",
               description: "Hire from proof of work",
               icon: Building2,
-              tone: "bg-fuchsia-500/10 text-fuchsia-400",
             },
             {
               label: "Dijkstra Mobile",
               href: "/products/mobile",
               description: "Community-built Android & iOS apps",
               icon: Smartphone,
-              tone: "bg-violet-500/10 text-violet-400",
             },
           ],
         },
