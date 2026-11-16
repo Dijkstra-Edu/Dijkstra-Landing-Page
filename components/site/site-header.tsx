@@ -9,6 +9,7 @@ import { IconBrandGithub } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { platformLinks, siteConfig } from "@/lib/site";
 import { mainNav, type MegaMenu, type NavLink } from "@/lib/navigation";
+import { PostCover } from "@/components/blog/post-cover";
 import { MobileMenu } from "./mobile-menu";
 import { useHeaderState, type HeaderTone } from "./use-header-state";
 
@@ -163,18 +164,16 @@ function DropdownContent({
                 c.item,
               )}
             >
-              <span
-                className={cn(
-                  "mb-3 block aspect-[16/10] overflow-hidden rounded-md border",
-                  c.divider,
-                )}
-              >
-                <img
-                  src={menu.aside.article.image}
-                  alt=""
-                  className="h-full w-full object-cover object-left-top"
-                />
-              </span>
+              <PostCover
+                post={{
+                  slug: menu.aside.article.slug,
+                  cover: menu.aside.article.image,
+                  coverAlt: "",
+                  category: menu.aside.article.category,
+                }}
+                sizes="240px"
+                className={cn("mb-3 rounded-md border", c.divider)}
+              />
               <span className="block text-sm font-medium">
                 {menu.aside.article.title}
               </span>

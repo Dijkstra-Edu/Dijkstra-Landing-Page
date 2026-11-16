@@ -36,10 +36,12 @@ export type MegaMenu = {
         kind: "featured";
         title: string;
         article: {
+          slug: string;
           title: string;
           excerpt: string;
           href: string;
           image: string;
+          category: "Announcement" | "Engineering" | "Community" | "Guide";
         };
       };
 };
@@ -242,8 +244,10 @@ export const mainNav: NavItem[] = [
           title: "Dijkstra Blog is live!",
           excerpt:
             "Discover how students are sharing what they've learnt through the Dijkstra blogâ€¦",
+          slug: "dijkstra-blog-is-live",
           href: "/blog/dijkstra-blog-is-live",
           image: "/blog.png",
+          category: "Announcement",
         },
       },
     },

@@ -1,11 +1,34 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { Block } from "@/content/blog";
 
+const tones = {
+  dark: {
+    body: "text-neutral-300",
+    heading: "text-white",
+    marker: "marker:text-neutral-500",
+    quote: "border-neutral-600 text-white",
+  },
+  light: {
+    body: "text-neutral-700",
+    heading: "text-neutral-950",
+    marker: "marker:text-neutral-400",
+    quote: "border-neutral-300 text-neutral-900",
+  },
+};
+
 /** Renders structured article content with consistent typography. */
-export function ProseBlocks({ blocks }: { blocks: Block[] }) {
+export function ProseBlocks({
+  blocks,
+  tone = "dark",
+}: {
+  blocks: Block[];
+  tone?: "dark" | "light";
+}) {
+  const t = tones[tone];
   return (
-    <div className="space-y-6 text-[17px] leading-8 text-neutral-300">
+    <div className={cn("space-y-6 text-[17px] leading-8", t.body)}>
       {blocks.map((block, i) => {
         switch (block.type) {
           case "p":
@@ -14,17 +37,17 @@ export function ProseBlocks({ blocks }: { blocks: Block[] }) {
             return (
               <h2
                 key={i}
-                className="pt-4 text-2xl font-semibold leading-tight text-white"
+                className={cn(
+                  "pt-4 text-2xl font-semibold leading-tight tracking-tight",
+                  t.heading,
+                )}
               >
                 {block.text}
               </h2>
             );
           case "ul":
             return (
-              <ul
-                key={i}
-                className="list-disc space-y-2 pl-6 marker:text-green-500"
-              >
+              <ul key={i} className={cn("list-disc space-y-2 pl-6", t.marker)}>
                 {block.items.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -34,7 +57,7 @@ export function ProseBlocks({ blocks }: { blocks: Block[] }) {
             return (
               <ol
                 key={i}
-                className="list-decimal space-y-2 pl-6 marker:text-green-500"
+                className={cn("list-decimal space-y-2 pl-6", t.marker)}
               >
                 {block.items.map((item) => (
                   <li key={item}>{item}</li>
@@ -45,14 +68,17 @@ export function ProseBlocks({ blocks }: { blocks: Block[] }) {
             return (
               <blockquote
                 key={i}
-                className="border-l-2 border-green-500 pl-5 text-xl italic leading-relaxed text-white"
+                className={cn(
+                  "border-l-2 pl-5 text-xl leading-relaxed",
+                  t.quote,
+                )}
               >
                 {block.text}
               </blockquote>
             );
           case "cta": {
             const className =
-              "inline-flex items-center gap-2 rounded-xl bg-green-700 px-5 py-2.5 text-base font-semibold text-white no-underline transition-colors hover:bg-green-600";
+              "inline-flex items-center gap-2 rounded-lg bg-green-700 px-5 py-2.5 text-base font-medium text-white no-underline transition-colors hover:bg-green-600";
             return (
               <p key={i} className="pt-2">
                 {block.href.startsWith("/") ? (

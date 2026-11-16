@@ -13,6 +13,7 @@ import { Members } from "@/components/landing/members";
 import { JobMarket } from "@/components/landing/job-market";
 import { Mission } from "@/components/landing/mission";
 import { Contact } from "@/components/landing/contact";
+import type React from "react";
 import type { TeamsSnapshot } from "@/lib/teams/types";
 
 /**
@@ -20,7 +21,14 @@ import type { TeamsSnapshot } from "@/lib/teams/types";
  * (see `components/landing/*`). Shared chrome (header / footer) lives in
  * `components/site/*` so that every sub-page can reuse it.
  */
-export default function LandingPage({ teams }: { teams: TeamsSnapshot }) {
+export default function LandingPage({
+  teams,
+  blog,
+}: {
+  teams: TeamsSnapshot;
+  /** Server-rendered "From the blog" section (see app/page.tsx). */
+  blog?: React.ReactNode;
+}) {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       <SiteHeader />
@@ -34,6 +42,7 @@ export default function LandingPage({ teams }: { teams: TeamsSnapshot }) {
         <Testimonials />
         <Members teams={teams} />
         <JobMarket />
+        {blog}
         <Mission />
         <Contact />
       </main>

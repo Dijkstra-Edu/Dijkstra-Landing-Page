@@ -4,6 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ChevronRight, Github, Users } from "lucide-react";
 import { PageShell } from "@/components/site/page-shell";
+import { PostCard } from "@/components/blog/post-card";
+import { postsForProduct } from "@/content/blog";
 import { Section } from "@/components/site/section";
 import { LinkCard } from "@/components/site/link-card";
 import { CtaBand } from "@/components/site/cta-band";
@@ -70,6 +72,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     .map((slug) => getProduct(slug))
     .filter((p): p is Product => Boolean(p));
   const ctaExternal = !product.cta.href.startsWith("/");
+  const posts = postsForProduct(product.slug);
 
   return (
     <PageShell>
@@ -244,6 +247,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 </summary>
                 <p className="mt-3 text-neutral-400">{faq.a}</p>
               </details>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {posts.length > 0 && (
+        <Section id="reading" title="From the blog">
+          <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} tone="dark" />
             ))}
           </div>
         </Section>

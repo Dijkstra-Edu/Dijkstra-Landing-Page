@@ -3,6 +3,8 @@ import { Download } from "lucide-react";
 import { PageShell } from "@/components/site/page-shell";
 import { PageHero } from "@/components/site/page-hero";
 import { Section } from "@/components/site/section";
+import { PostCard } from "@/components/blog/post-card";
+import { posts } from "@/content/blog";
 import { getTeamsSnapshot } from "@/lib/teams";
 import { siteConfig } from "@/lib/site";
 
@@ -85,6 +87,18 @@ export default async function PressPage() {
               institutes.
             </p>
           </div>
+        </div>
+      </Section>
+
+      <Section
+        id="news"
+        title="Recent news"
+        description="Announcements and explainers from the Dijkstra blog."
+      >
+        <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.slice(0, 3).map((post) => (
+            <PostCard key={post.slug} post={post} tone="dark" />
+          ))}
         </div>
       </Section>
 

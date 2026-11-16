@@ -293,6 +293,22 @@ export const posts: Post[] = [
 
 export const getPost = (slug: string) => posts.find((p) => p.slug === slug);
 
+/** Posts to surface on each product page (by product slug). */
+const productPosts: Record<string, string[]> = {
+  dashboard: ["your-first-week-on-dijkstra", "how-helios-ranks-proof-of-work"],
+  ranking: ["how-helios-ranks-proof-of-work", "your-first-week-on-dijkstra"],
+  "dijkstra-gpt": ["meet-dijkstra-gpt"],
+  blog: ["dijkstra-blog-is-live", "how-teams-work-at-dijkstra"],
+  opportunities: ["gsoc-2026-project-ideas"],
+  "learning-hub": ["your-first-week-on-dijkstra"],
+};
+
+export function postsForProduct(productSlug: string): Post[] {
+  return (productPosts[productSlug] ?? [])
+    .map((slug) => getPost(slug))
+    .filter((p): p is Post => Boolean(p));
+}
+
 /** Rough reading time at 220 words per minute. */
 export function readingTime(post: Post): number {
   const words = post.body
