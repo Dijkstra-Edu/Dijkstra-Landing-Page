@@ -79,10 +79,10 @@ export default function MissionPage() {
               className="rounded-2xl border border-white/10 bg-white/[0.03] p-6"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-sm font-semibold">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/20 font-mono text-xs text-neutral-300">
                   {i + 1}
                 </span>
-                <item.icon className="h-5 w-5 text-green-400" />
+                <item.icon className="h-5 w-5 text-neutral-500" />
               </div>
               <h3 className="mt-4 text-lg font-semibold">{item.title}</h3>
               <p className="mt-2 leading-relaxed text-neutral-400">

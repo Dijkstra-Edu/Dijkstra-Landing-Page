@@ -206,10 +206,10 @@ export default async function TeamPage() {
                 className="flex flex-col rounded-2xl border border-white/10 bg-black/40 p-5"
               >
                 <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-sm font-semibold">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/20 font-mono text-xs text-neutral-300">
                     {i + 1}
                   </span>
-                  <step.icon className="h-5 w-5 text-green-400" />
+                  <step.icon className="h-5 w-5 text-neutral-500" />
                 </div>
                 <h3 className="mt-4 font-semibold">{step.title}</h3>
                 <p className="mt-2 flex-1 text-sm text-neutral-400">
@@ -217,7 +217,7 @@ export default async function TeamPage() {
                 </p>
                 <a
                   href={step.href}
-                  className="mt-4 text-sm font-medium text-green-400 hover:text-green-300"
+                  className="mt-4 text-sm font-medium text-neutral-200 underline-offset-4 hover:text-white hover:underline"
                 >
                   {step.cta} â†’
                 </a>

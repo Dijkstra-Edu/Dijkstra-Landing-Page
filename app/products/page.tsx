@@ -38,11 +38,7 @@ export default function ProductsPage() {
               <LinkCard
                 key={product.slug}
                 href={`/products/${product.slug}`}
-                icon={
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-500/10 text-green-400">
-                    <product.icon className="h-5 w-5" />
-                  </span>
-                }
+                icon={<product.icon className="h-5 w-5 text-neutral-400" />}
                 title={product.name}
                 description={product.tagline}
                 meta={<StatusBadge status={product.status} />}

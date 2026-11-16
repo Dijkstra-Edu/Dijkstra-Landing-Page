@@ -91,37 +91,35 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               <span className="text-neutral-300">{product.name}</span>
             </nav>
             <div className="mb-4 flex flex-wrap items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-500/10 text-green-400">
-                <product.icon className="h-5 w-5" />
-              </span>
+              <product.icon className="h-5 w-5 text-neutral-400" />
               <StatusBadge status={product.status} />
             </div>
-            <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
               {product.name}
             </h1>
-            <p className="mt-3 text-xl text-green-300/90">{product.tagline}</p>
-            <p className="mt-5 text-lg leading-relaxed text-neutral-300">
+            <p className="mt-3 text-xl text-neutral-300">{product.tagline}</p>
+            <p className="mt-5 text-lg leading-relaxed text-neutral-400">
               {product.summary}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               {ctaExternal ? (
                 <a
                   href={product.cta.href}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-700 px-6 py-3 font-semibold text-white hover:bg-green-600"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-2.5 font-medium text-white hover:bg-green-600"
                 >
                   {product.cta.label} <ArrowRight className="h-4 w-4" />
                 </a>
               ) : (
                 <Link
                   href={product.cta.href}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-green-700 px-6 py-3 font-semibold text-white hover:bg-green-600"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-2.5 font-medium text-white hover:bg-green-600"
                 >
                   {product.cta.label} <ArrowRight className="h-4 w-4" />
                 </Link>
               )}
               <Link
                 href="/features"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3 font-medium text-neutral-200 hover:border-white/30 hover:bg-white/5"
+                className="inline-flex items-center justify-center rounded-lg border border-white/15 px-5 py-2.5 font-medium text-neutral-200 hover:border-white/30 hover:bg-white/5"
               >
                 All features
               </Link>
@@ -146,7 +144,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               key={h.title}
               className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
             >
-              <h.icon className="h-6 w-6 text-green-500" />
+              <h.icon className="h-5 w-5 text-neutral-400" />
               <h3 className="mt-4 font-semibold">{h.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-neutral-400">
                 {h.text}
@@ -163,7 +161,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               key={step.title}
               className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-green-600 text-sm font-semibold">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/20 font-mono text-xs text-neutral-300">
                 {i + 1}
               </span>
               <h3 className="mt-4 font-semibold">{step.title}</h3>
@@ -200,14 +198,14 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                   )}
                 </div>
                 <p className="mt-1 text-sm text-neutral-400">{service.role}</p>
-                <p className="mt-3 font-mono text-xs text-green-300/80">
+                <p className="mt-3 font-mono text-xs text-neutral-500">
                   {service.stack}
                 </p>
               </div>
             ))}
           </div>
-          <div className="rounded-2xl border border-green-500/20 bg-green-500/[0.05] p-5">
-            <Users className="h-6 w-6 text-green-400" />
+          <div className="rounded-2xl border border-white/10 p-5">
+            <Users className="h-5 w-5 text-neutral-400" />
             <h3 className="mt-4 font-semibold">Built by students</h3>
             <p className="mt-2 text-sm text-neutral-400">
               {product.name} is built by Dijkstra&apos;s{" "}
@@ -225,7 +223,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             </p>
             <Link
               href="/team"
-              className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-green-400 hover:text-green-300"
+              className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-neutral-200 underline-offset-4 hover:text-white hover:underline"
             >
               Meet the team <ArrowRight className="h-4 w-4" />
             </Link>
@@ -268,11 +266,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             <LinkCard
               key={p.slug}
               href={`/products/${p.slug}`}
-              icon={
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-green-400">
-                  <p.icon className="h-5 w-5" />
-                </span>
-              }
+              icon={<p.icon className="h-5 w-5 text-neutral-400" />}
               title={p.name}
               description={p.tagline}
               meta={<StatusBadge status={p.status} />}

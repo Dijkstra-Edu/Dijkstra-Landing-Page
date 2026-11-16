@@ -57,7 +57,7 @@ export default async function PressPage() {
       >
         <a
           href="/contact?topic=press"
-          className="inline-flex items-center rounded-xl bg-green-700 px-5 py-2.5 font-semibold text-white hover:bg-green-600"
+          className="inline-flex items-center rounded-lg bg-green-700 px-5 py-2.5 font-medium text-white hover:bg-green-600"
         >
           Contact the team
         </a>

@@ -125,17 +125,13 @@ export default function IntegrationsPage() {
             <a
               key={item.name}
               href={item.href}
-              className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
+              className="group flex flex-col rounded-xl border border-white/10 p-5 transition-colors hover:border-white/25 hover:bg-white/[0.02]"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-neutral-200">
-                  {item.icon}
-                </span>
+                <span className="text-neutral-400">{item.icon}</span>
                 <StatusBadge status={item.status} />
               </div>
-              <h2 className="mt-4 font-semibold group-hover:text-green-300">
-                {item.name}
-              </h2>
+              <h2 className="mt-4 font-semibold">{item.name}</h2>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-400">
                 {item.description}
               </p>

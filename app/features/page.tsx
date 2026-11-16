@@ -11,7 +11,6 @@ import {
   type Feature,
   type FeatureStatus,
 } from "@/content/features";
-import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Features",
@@ -61,16 +60,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
   return (
     <LinkCard
       href={feature.href}
-      icon={
-        <span
-          className={cn(
-            "flex h-11 w-11 items-center justify-center rounded-xl bg-white/5",
-            feature.accent,
-          )}
-        >
-          <feature.icon className="h-5 w-5" />
-        </span>
-      }
+      icon={<feature.icon className="h-5 w-5 text-neutral-400" />}
       title={feature.name}
       description={feature.description}
       meta={

@@ -29,7 +29,7 @@ export function Section({
           {title && (
             <h2
               id={id ? `${id}-heading` : undefined}
-              className="text-2xl font-bold text-white sm:text-3xl"
+              className="text-2xl font-semibold tracking-tight text-white sm:text-3xl"
             >
               {title}
             </h2>

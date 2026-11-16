@@ -85,7 +85,7 @@ export default function LegalPage({ params }: { params: { slug: string } }) {
           {doc.canonical && (
             <a
               href={doc.canonical.href}
-              className="mt-12 inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-2.5 font-medium hover:border-white/30 hover:bg-white/5"
+              className="mt-12 inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-2.5 font-medium hover:border-white/30 hover:bg-white/5"
             >
               {doc.canonical.label} <ArrowUpRight className="h-4 w-4" />
             </a>

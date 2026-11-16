@@ -151,14 +151,14 @@ export default function PricingPage() {
               {plan.cta.href.startsWith("/") ? (
                 <Link
                   href={plan.cta.href}
-                  className="mt-8 inline-flex justify-center rounded-xl border border-white/15 px-5 py-2.5 text-sm font-medium hover:border-white/30 hover:bg-white/5"
+                  className="mt-8 inline-flex justify-center rounded-lg border border-white/15 px-5 py-2.5 text-sm font-medium hover:border-white/30 hover:bg-white/5"
                 >
                   {plan.cta.label}
                 </Link>
               ) : (
                 <a
                   href={plan.cta.href}
-                  className="mt-8 inline-flex justify-center rounded-xl bg-green-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-600"
+                  className="mt-8 inline-flex justify-center rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-600"
                 >
                   {plan.cta.label}
                 </a>
@@ -195,7 +195,7 @@ export default function PricingPage() {
               </ul>
               <Link
                 href={plan.href}
-                className="mt-8 inline-flex justify-center rounded-xl bg-green-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-600"
+                className="mt-8 inline-flex justify-center rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-600"
               >
                 Talk to us
               </Link>
