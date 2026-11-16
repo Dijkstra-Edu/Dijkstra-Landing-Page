@@ -1,41 +1,57 @@
 /**
- * Demo data for the product showcase.
+ * Demo data for the hero product showcase.
  *
- * Shapes mirror the real Dijkstra Web components (see Dijkstra-Web:
- * components/section-cards.tsx, chart-area-interactive.tsx,
- * login/slides/ranking-system-slide.tsx, data/career-paths.ts) so the frames
- * look like the product, but every value here is illustrative.
+ * Every shape mirrors a real Dijkstra Web component so the frames look like
+ * the product (sources in the Dijkstra-Web app):
+ *   - sidebar / header ........ components/app-sidebar.tsx, site-header.tsx,
+ *                               lib/Zustand/settings-store.ts (header pins)
+ *   - dashboard "Stats" tab ... components/section-cards.tsx,
+ *                               chart-area-interactive.tsx, profile-data.tsx
+ *   - "Portfolio" tab ......... components/contribution-heatmap.tsx,
+ *                               profile/profile-container.tsx + sections/*
+ *   - opportunities ........... components/opportunities/*, data/project-data.ts,
+ *                               data/fellowship-data.ts
+ *   - Dijkstra GPT ............ components/dijkstra-gpt.tsx
+ *   - home .................... components/homepage.tsx
+ *
+ * The person is fictional and all numbers are illustrative.
  */
 import { mulberry32 } from "@/lib/seeded-random";
 
 export const demoUser = {
   name: "Aarav Mehta",
   handle: "aarav-dev",
+  email: "aarav.mehta@example.com",
   avatar: "/placeholder-user.jpg",
+  bio: "CS undergrad. Working on @Dijkstra-Edu's Resume and CV Builder. Into React, TypeScript and compilers.",
   role: "SDE-1 (Frontend Engineer)",
   team: "Resume and CV Builder",
+  project: "Dijkstra Statistics & Aggregation",
+  memberSince: "24th March, 2025",
+  rank: { key: "GOLD_1", label: "GOLD 1" },
   specialization: {
-    label: "Frontend Engineer",
-    short: "F.E",
+    label: "Frontend Engineer (F.E)",
     icon: "/specializations/Developers/FRONTEND.png",
   },
   streak: 12,
   followers: 48,
   following: 61,
   repos: 27,
+  xp: { current: 5435, next: 10000 },
+  position: { rank: 42, total: 318 },
 };
 
-/** "Tasks for the day" radar (Dijkstra-Web: SectionCards â†’ chartData3). */
+/** "Tasks For the Day" radar â€” Dijkstra-Web: SectionCards â†’ chartData3. */
 export const taskRadar = [
-  { item: "GitHub", completed: 4, target: 5 },
-  { item: "LeetCode", completed: 2, target: 2 },
-  { item: "LinkedIn", completed: 3, target: 4 },
-  { item: "Resume", completed: 1, target: 2 },
-  { item: "Project", completed: 2, target: 3 },
-  { item: "Learning", completed: 2, target: 2 },
+  { item: "GitHub", todo: 2, completed: 5 },
+  { item: "Leetcode", todo: 1, completed: 2 },
+  { item: "LinkedIn", todo: 10, completed: 10 },
+  { item: "Resume", todo: 0, completed: 0 },
+  { item: "Project", todo: 2, completed: 2 },
+  { item: "Learning", todo: 2, completed: 2 },
 ];
 
-/** LeetCode solved split (radial gauge). */
+/** LeetCode split shown in the "Leetcode Work" gauge (220 problems). */
 export const leetcode = { easy: 112, medium: 86, hard: 22 };
 
 export type ActivityPoint = {
@@ -47,157 +63,270 @@ export type ActivityPoint = {
 };
 
 /**
- * Six weeks of stacked activity (Dijkstra-Web: ChartAreaInteractive).
- * Generated with a seeded PRNG so it is stable between renders.
+ * Three months of stacked activity (Dijkstra-Web: ChartAreaInteractive,
+ * "All Activity â€” Total for the last 3 months"). Seeded, so it is stable.
  */
 export const activity: ActivityPoint[] = (() => {
   const random = mulberry32(42);
-  const months = ["Apr", "May", "Jun"];
-  return Array.from({ length: 42 }, (_, i) => {
-    const wave = Math.sin(i / 3.2) * 0.35 + 0.65;
+  const start = Date.UTC(2025, 3, 1);
+  return Array.from({ length: 91 }, (_, i) => {
+    const d = new Date(start + i * 86_400_000);
+    const wave = Math.sin(i / 2.6) * 0.3 + Math.sin(i / 7.3) * 0.2 + 0.6;
     return {
-      day: `${months[Math.floor(i / 15)]} ${(i % 15) * 2 + 1}`,
-      GitHub: Math.round((120 + random() * 260) * wave),
-      LeetCode: Math.round((90 + random() * 220) * wave),
-      Projects: Math.round((30 + random() * 110) * wave),
+      day: d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+      }),
+      GitHub: Math.round((110 + random() * 300) * wave),
+      LeetCode: Math.round((100 + random() * 280) * wave),
+      Projects: Math.round((30 + random() * 120) * wave),
       LinkedIn: Math.round(2 + random() * 8),
     };
   });
 })();
 
-/** GitHub-style contribution heatmap: 20 weeks Ã— 7 days, levels 0â€“4. */
-export const heatmap: number[][] = (() => {
+/**
+ * A full year of GitHub-style contributions (53 weeks Ã— 7 days, levels
+ * 0â€“4) for the Portfolio tab's Contribution Activity card.
+ */
+export const contributionYear: number[][] = (() => {
   const random = mulberry32(7);
-  return Array.from({ length: 20 }, (_, week) =>
+  return Array.from({ length: 53 }, (_, week) =>
     Array.from({ length: 7 }, (_, day) => {
-      const bias = week / 20 + (day > 0 && day < 6 ? 0.15 : -0.1);
-      const r = random() + bias * 0.6;
-      if (r < 0.35) return 0;
-      if (r < 0.6) return 1;
-      if (r < 0.8) return 2;
+      const season = Math.sin((week / 53) * Math.PI * 2 - 1) * 0.18;
+      const weekday = day > 0 && day < 6 ? 0.12 : -0.12;
+      const r = random() + season + weekday + week / 160;
+      if (r < 0.42) return 0;
+      if (r < 0.66) return 1;
+      if (r < 0.84) return 2;
       if (r < 1.0) return 3;
       return 4;
     }),
   );
 })();
 
-/** The rank ladder shown in Dijkstra Web's ranking slide. */
-export const rankLadder = [
-  { key: "IRON_3", label: "Iron", color: "#929292" },
-  { key: "BRONZE_3", label: "Bronze", color: "#cd7f32" },
-  { key: "SILVER_3", label: "Silver", color: "#c9c9c9" },
-  { key: "GOLD_3", label: "Gold", color: "#f5c518" },
-  { key: "PLATINUM_3", label: "Platinum", color: "#7e9bbf" },
-  { key: "DIAMOND_3", label: "Diamond", color: "#8fd8ec" },
-  { key: "EMERALD_3", label: "Emerald", color: "#50c878" },
-  { key: "LAPIS_3", label: "Lapis", color: "#c77df3" },
-  { key: "QUARTZ_3", label: "Quartz", color: "#e8c95a" },
-  { key: "SAPHIRE_3", label: "Amethyst", color: "#e3480b" },
-  { key: "OBSIDIAN", label: "Obsidian", color: "#6a5acd" },
-] as const;
+export const contributionTotal = contributionYear
+  .flat()
+  .reduce((sum, level) => sum + (level === 0 ? 0 : level * 2 - 1), 0);
 
-/** Index into `rankLadder` of the demo user's current tier. */
-export const currentRankIndex = 3;
-
-/** Helios scores proof of work across these signals. */
-export const xpBreakdown = [
-  { label: "Open source", value: 78 },
-  { label: "Projects", value: 64 },
-  { label: "DSA / LeetCode", value: 71 },
-  { label: "Work experience", value: 35 },
-  { label: "Academics", value: 82 },
+/** Portfolio â†’ Work Experience timeline entries. */
+export const workExperience = [
+  {
+    title: "Frontend Engineer",
+    company: "Dijkstra",
+    logo: "/icon.png",
+    start: "Mar 2025",
+    end: "Present",
+    current: true,
+    duration: "8 mos",
+    location: "Remote",
+    locationType: "Remote",
+    employment: "Open source",
+    description:
+      "Building the Resume and CV Builder: compiling a student's profile into LaTeX-quality resumes, with live preview and export.",
+    tools: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
+  },
+  {
+    title: "Teaching Assistant â€” Data Structures",
+    company: "University CS Department",
+    logo: null,
+    start: "Aug 2024",
+    end: "Dec 2024",
+    current: false,
+    duration: "5 mos",
+    location: "Bengaluru",
+    locationType: "On-site",
+    employment: "Part-time",
+    description:
+      "Ran weekly lab sessions on trees, graphs and dynamic programming for 60 second-year students.",
+    tools: ["C++", "Python"],
+  },
 ];
 
-export const xp = { current: 5120, nextTier: 6000, nextTierLabel: "Platinum" };
+export const skills = [
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Node.js",
+  "Python",
+  "C++",
+  "PostgreSQL",
+  "Docker",
+  "Git",
+  "Data Structures",
+];
 
-export type DemoOpportunity = {
+/** Opportunities â†’ "Featured Open Source Projects" (data/project-data.ts). */
+export type DemoProject = {
   title: string;
   org: string;
-  kind: "Project" | "Fellowship" | "Internship";
-  summary: string;
-  tags: string[];
-  match: number;
-  unlocksAt?: string;
+  logo: "react" | "k8s" | "tf" | "vscode" | "django" | "node";
+  stars: string;
+  forks: string;
+  issues: string;
+  updated: string;
+  language: string;
+  difficulty: "beginner" | "intermediate" | "advanced";
+  highlight: "popular" | "trending" | "new" | "good-first-issue";
+  description: string;
+  topics: string[];
 };
 
-export const opportunities: DemoOpportunity[] = [
+export const projects: DemoProject[] = [
+  {
+    title: "React",
+    org: "Facebook",
+    logo: "react",
+    stars: "220.0k",
+    forks: "45.0k",
+    issues: "850",
+    updated: "2 days ago",
+    language: "JavaScript",
+    difficulty: "intermediate",
+    highlight: "popular",
+    description:
+      "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
+    topics: ["javascript", "react", "frontend", "ui", "library"],
+  },
+  {
+    title: "Kubernetes",
+    org: "Kubernetes",
+    logo: "k8s",
+    stars: "105.0k",
+    forks: "38.0k",
+    issues: "2500",
+    updated: "3 days ago",
+    language: "Go",
+    difficulty: "advanced",
+    highlight: "trending",
+    description:
+      "Production-grade container scheduling and management for containerized applications.",
+    topics: ["go", "kubernetes", "containers", "orchestration"],
+  },
+  {
+    title: "TensorFlow",
+    org: "Google",
+    logo: "tf",
+    stars: "180.0k",
+    forks: "88.0k",
+    issues: "1800",
+    updated: "4 days ago",
+    language: "C++",
+    difficulty: "advanced",
+    highlight: "popular",
+    description:
+      "An open source machine learning framework for everyone â€” a comprehensive platform for ML.",
+    topics: ["machine-learning", "deep-learning", "python", "ai"],
+  },
+  {
+    title: "Visual Studio Code",
+    org: "Microsoft",
+    logo: "vscode",
+    stars: "155.0k",
+    forks: "27.0k",
+    issues: "6000",
+    updated: "1 day ago",
+    language: "TypeScript",
+    difficulty: "intermediate",
+    highlight: "trending",
+    description:
+      "A lightweight but powerful source code editor for Windows, macOS and Linux.",
+    topics: ["typescript", "editor", "electron", "ide"],
+  },
+  {
+    title: "Django",
+    org: "Django Software Foundation",
+    logo: "django",
+    stars: "75.0k",
+    forks: "31.0k",
+    issues: "280",
+    updated: "5 days ago",
+    language: "Python",
+    difficulty: "intermediate",
+    highlight: "good-first-issue",
+    description:
+      "The web framework for perfectionists with deadlines â€” batteries included.",
+    topics: ["python", "django", "web-framework", "backend", "mvc"],
+  },
+];
+
+/** Opportunities â†’ "Featured Fellowship Programs" (data/fellowship-data.ts). */
+export const fellowships = [
   {
     title: "Google Summer of Code",
-    org: "Open-source orgs",
-    kind: "Fellowship",
-    summary: "Paid, mentored summer contributions to open source.",
-    tags: ["Open source", "Stipend"],
-    match: 92,
-  },
-  {
-    title: "Kubernetes â€” good first issues",
-    org: "CNCF",
-    kind: "Project",
-    summary: "Curated starter issues matched to your Go experience.",
-    tags: ["Go", "Cloud"],
-    match: 84,
-  },
-  {
-    title: "Frontend Engineer Intern",
-    org: "Partner company",
-    kind: "Internship",
-    summary: "Build product UI with a partner engineering team.",
-    tags: ["React", "TypeScript"],
-    match: 71,
-    unlocksAt: "Platinum",
-  },
-  {
-    title: "LFX Mentorship",
-    org: "Linux Foundation",
-    kind: "Fellowship",
-    summary: "Structured mentorship on Linux Foundation projects.",
-    tags: ["Mentored", "Remote"],
-    match: 78,
+    org: "Google",
+    duration: "12 weeks",
+    location: "Remote",
+    stipend: "$1,500 - $6,600",
+    deadline: "18 days left",
+    highlight: "popular" as const,
   },
   {
     title: "MLH Fellowship",
     org: "Major League Hacking",
-    kind: "Fellowship",
-    summary: "Remote, team-based software engineering fellowship.",
-    tags: ["Teams", "Stipend"],
-    match: 66,
-    unlocksAt: "Platinum",
+    duration: "12 weeks",
+    location: "Remote",
+    stipend: "$5,000",
+    deadline: "25 days left",
+    highlight: "trending" as const,
   },
   {
-    title: "Backend Engineer (New grad)",
-    org: "Partner company",
-    kind: "Internship",
-    summary: "APIs and data services for a partner platform.",
-    tags: ["Python", "APIs"],
-    match: 58,
-    unlocksAt: "Diamond",
+    title: "LF Mentorship Program",
+    org: "Linux Foundation",
+    duration: "12 weeks",
+    location: "Remote",
+    stipend: "$3,000 - $6,600",
+    deadline: "31 days left",
+    highlight: "new" as const,
   },
+  {
+    title: "Season of Docs",
+    org: "Google",
+    duration: "3-5 months",
+    location: "Remote",
+    stipend: "$2,400 - $15,000",
+    deadline: "40 days left",
+    highlight: "new" as const,
+  },
+];
+
+/** Dijkstra GPT â†’ example prompts (components/dijkstra-gpt.tsx). */
+export const gptExamples = [
+  "I'm lost. How do I get started with coding to get a job in tech?",
+  "What are the steps I can take to become a Computer Science Engineer?",
+  "How do I approach a coding interview?",
+  "What are some good resources for learning algorithms?",
+  "How can I leverage AI in my coding projects?",
+  "How do I improve my resume for tech jobs?",
 ];
 
 export const gptConversation = {
-  question: "I'm Gold right now. What should I focus on to reach Platinum?",
-  tool: "get_user_metrics",
+  question: "I'm Gold 1 right now. What should I focus on to reach Platinum?",
   answer:
-    "Based on your metrics, your DSA and academics are strong â€” the gap is proof of work you can show. This week: 1) ship the open PR on the Resume builder and get it reviewed, 2) solve 2 medium LeetCode problems a day and write one up as a blog post, 3) add measurable impact to your work-experience entry. That alone should close most of the 880 XP gap.",
-  followUps: [
-    "Which LeetCode topics am I weakest in?",
-    "Review my resume bullet points",
-    "Which Dijkstra team should I join next?",
-  ],
+    "Looking at your GitHub and LeetCode activity, your consistency is great â€” a 12-day streak and 220 problems solved. The gap to Platinum is proof of work you can show. This week:\n- Get your open PR on the Resume builder reviewed and merged\n- Solve 2 medium problems a day, and write one up as a blog post\n- Add measurable impact to your Frontend Engineer experience",
 };
 
-export const sidebarItems = [
-  "Home",
-  "Dijkstra GPT",
-  "Dashboard",
-  "Learning Hub",
-  "Blogs and Articles",
-  "Join a Team",
-  "Project Planner",
+/** Home â†’ Weekly Leaderboard (components/homepage.tsx). */
+export const leaderboard = [
+  { rank: 1, name: "Alex Chen", points: 1250 },
+  { rank: 2, name: "Sarah Kim", points: 1180 },
+  { rank: 3, name: "You", points: 1050, you: true },
+  { rank: 4, name: "Mike Johnson", points: 980 },
 ];
 
-export const sidebarOpportunities = [
-  "Projects Hub",
-  "Fellowships",
-  "Job Board",
+export const schedule = [
+  {
+    time: "09:00",
+    title: "Dynamic Programming",
+    duration: "45 min",
+    done: true,
+  },
+  {
+    time: "14:30",
+    title: "System Design Reading",
+    duration: "30 min",
+    current: true,
+  },
+  { time: "19:00", title: "Mock Interview", duration: "60 min" },
 ];

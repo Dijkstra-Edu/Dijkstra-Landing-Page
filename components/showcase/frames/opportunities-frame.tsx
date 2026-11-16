@@ -1,146 +1,353 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Briefcase, FolderGit2, GraduationCap, Lock } from "lucide-react";
+import {
+  AwardIcon,
+  BarChartIcon,
+  BookmarkIcon,
+  CalendarIcon,
+  ChevronLeft,
+  ChevronRight,
+  ClockIcon,
+  CodeIcon,
+  DollarSignIcon,
+  ExternalLinkIcon,
+  EyeIcon,
+  GitForkIcon,
+  GraduationCapIcon,
+  StarIcon,
+  TrendingUpIcon,
+  UsersIcon,
+} from "lucide-react";
+import {
+  IconBrandDjango,
+  IconBrandReact,
+  IconBrandVscode,
+  IconSteeringWheel,
+} from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
-import { AnimatedBar } from "../widgets";
-import { opportunities, xp, type DemoOpportunity } from "../data";
+import { fellowships, projects, type DemoProject } from "../data";
+import { useTimeline } from "../use-timeline";
+import { useCanvasSize } from "../scaled-canvas";
+import {
+  WBadge,
+  WButton,
+  WCard,
+  WCardContent,
+  WCardHeader,
+  WCardTitle,
+} from "../web-ui";
 
-const platinumLocked = opportunities.filter(
-  (o) => o.unlocksAt === "Platinum",
-).length;
+/** featured-project-slider.tsx â†’ getHighlightDetails */
+const highlight = {
+  new: { Icon: StarIcon, label: "New", color: "bg-blue-100 text-blue-800" },
+  trending: {
+    Icon: TrendingUpIcon,
+    label: "Trending",
+    color: "bg-purple-100 text-purple-800",
+  },
+  popular: {
+    Icon: UsersIcon,
+    label: "Popular",
+    color: "bg-amber-100 text-amber-800",
+  },
+  "good-first-issue": {
+    Icon: BarChartIcon,
+    label: "Good First Issue",
+    color: "bg-green-100 text-green-800",
+  },
+} as const;
 
-const kindIcon: Record<DemoOpportunity["kind"], typeof Briefcase> = {
-  Project: FolderGit2,
-  Fellowship: GraduationCap,
-  Internship: Briefcase,
-};
+const difficultyColor = {
+  beginner: "bg-green-100 text-green-800",
+  intermediate: "bg-yellow-100 text-yellow-800",
+  advanced: "bg-red-100 text-red-800",
+} as const;
 
-const filters = ["All", "Projects", "Fellowships", "Jobs"];
+/** Organisation logos (the app loads remote SVGs; brand icons stand in). */
+function ProjectLogo({ logo }: { logo: DemoProject["logo"] }) {
+  switch (logo) {
+    case "react":
+      return <IconBrandReact className="h-8 w-8 text-[#149eca]" />;
+    case "k8s":
+      return <IconSteeringWheel className="h-8 w-8 text-[#326CE5]" />;
+    case "vscode":
+      return <IconBrandVscode className="h-8 w-8 text-[#007ACC]" />;
+    case "django":
+      return <IconBrandDjango className="h-8 w-8 text-[#0C4B33]" />;
+    case "tf":
+      return (
+        <span className="text-lg font-black tracking-tight text-[#FF6F00]">
+          TF
+        </span>
+      );
+    default:
+      return <CodeIcon className="h-6 w-6 text-gray-500" />;
+  }
+}
+
+function HighlightBadge({ kind }: { kind: keyof typeof highlight }) {
+  const h = highlight[kind];
+  return (
+    <WBadge variant="secondary" className={cn("gap-1", h.color)}>
+      <h.Icon className="!size-4" />
+      {h.label}
+    </WBadge>
+  );
+}
+
+function ProjectCard({ project }: { project: DemoProject }) {
+  return (
+    <WCard className="h-full">
+      <WCardHeader className="pb-2">
+        <div className="flex items-start justify-between">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md border border-gray-200 bg-white">
+            <ProjectLogo logo={project.logo} />
+          </div>
+          <HighlightBadge kind={project.highlight} />
+        </div>
+        <div className="mt-3">
+          <WCardTitle>{project.title}</WCardTitle>
+          <div className="mt-1 flex items-center gap-1">
+            <CodeIcon className="h-3.5 w-3.5 text-gray-500" />
+            <span className="truncate text-sm text-gray-500">
+              {project.org}
+            </span>
+          </div>
+        </div>
+      </WCardHeader>
+      <WCardContent className="flex flex-grow flex-col gap-3">
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center gap-2">
+            <StarIcon className="h-4 w-4 text-gray-500" />
+            <span>{project.stars} stars</span>
+            <WBadge className="ml-auto">{project.language}</WBadge>
+          </div>
+          <div className="flex items-center gap-2">
+            <GitForkIcon className="h-4 w-4 text-gray-500" />
+            <span>{project.forks} forks</span>
+            <WBadge
+              className={cn("ml-auto", difficultyColor[project.difficulty])}
+            >
+              {project.difficulty}
+            </WBadge>
+          </div>
+          <div className="flex items-center gap-2">
+            <EyeIcon className="h-4 w-4 text-gray-500" />
+            <span>{project.issues} issues</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ClockIcon className="h-4 w-4 text-gray-500" />
+            <span>Updated {project.updated}</span>
+          </div>
+        </div>
+        <p className="mt-2 text-sm text-gray-500">{project.description}</p>
+        <div className="mt-auto">
+          <p className="mb-1.5 text-xs font-medium text-gray-500">Topics:</p>
+          <div className="flex flex-wrap gap-1.5">
+            {project.topics.slice(0, 3).map((t) => (
+              <WBadge key={t} variant="secondary">
+                {t}
+              </WBadge>
+            ))}
+            {project.topics.length > 3 && (
+              <WBadge>+{project.topics.length - 3} more</WBadge>
+            )}
+          </div>
+        </div>
+      </WCardContent>
+      <div className="flex gap-3 px-6 pt-2">
+        <WButton variant="outline" size="sm" className="w-1/2">
+          <BookmarkIcon className="mr-1 h-4 w-4" /> Star
+        </WButton>
+        <WButton size="sm" className="w-1/2">
+          <ExternalLinkIcon className="mr-1 h-4 w-4" /> View Code
+        </WButton>
+      </div>
+    </WCard>
+  );
+}
+
+function FellowshipCard({ f }: { f: (typeof fellowships)[number] }) {
+  return (
+    <WCard className="h-full">
+      <WCardHeader className="pb-2">
+        <div className="flex items-start justify-between">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md border border-gray-200 bg-white">
+            <GraduationCapIcon className="h-6 w-6 text-gray-500" />
+          </div>
+          <HighlightBadge kind={f.highlight} />
+        </div>
+        <div className="mt-3">
+          <WCardTitle>{f.title}</WCardTitle>
+          <div className="mt-1 flex items-center gap-1">
+            <GraduationCapIcon className="h-3.5 w-3.5 text-gray-500" />
+            <span className="text-sm text-gray-500">{f.org}</span>
+          </div>
+        </div>
+      </WCardHeader>
+      <WCardContent className="space-y-2 text-sm">
+        <div className="flex items-center gap-2">
+          <ClockIcon className="h-4 w-4 text-gray-500" />
+          <span>{f.duration}</span>
+          <WBadge className="ml-auto">{f.location}</WBadge>
+        </div>
+        <div className="flex items-center gap-2">
+          <DollarSignIcon className="h-4 w-4 text-gray-500" />
+          <span>{f.stipend}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <CalendarIcon className="h-4 w-4 text-gray-500" />
+          <span>Deadline: {f.deadline}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <AwardIcon className="h-4 w-4 text-gray-500" />
+          <span>Mentorship Â· Stipend Â· Certificate</span>
+        </div>
+      </WCardContent>
+    </WCard>
+  );
+}
+
+function SectionHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <div className="min-w-0">
+        <h2 className="text-2xl font-semibold">{title}</h2>
+        <p className="text-gray-500">{description}</p>
+      </div>
+      <div className="hidden items-center gap-2 @3xl/app:flex">
+        <WButton variant="outline" size="icon" className="h-9 w-9">
+          <ChevronLeft className="h-4 w-4" />
+        </WButton>
+        <WButton variant="outline" size="icon" className="h-9 w-9">
+          <ChevronRight className="h-4 w-4" />
+        </WButton>
+        <WButton variant="ghost" className="rounded-2xl">
+          View All
+        </WButton>
+      </div>
+    </div>
+  );
+}
+
+/** Card widths per design size (the app uses viewport breakpoints). */
+const basis =
+  "basis-[85%] @3xl/app:basis-1/3 @7xl/app:basis-1/4 shrink-0 grow-0 pl-4";
 
 /**
- * Mirrors the Opportunities board: opportunities unlock as the student's
- * rank grows ("stronger opportunities unlock the faster you progress").
+ * Opportunities hub (Dijkstra-Web components/opportunities/*): promo banner,
+ * then carousels of featured open-source projects and fellowships.
+ * Storyline: the project carousel advances one card, then the page scrolls
+ * to the fellowship programmes.
  */
 export function OpportunitiesFrame() {
   const reduceMotion = useReducedMotion();
-  return (
-    <div className="flex h-full flex-col gap-3 p-3 text-neutral-900 @2xl:p-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <p className="text-sm font-semibold @2xl:text-base">
-            Opportunities for you
-          </p>
-          <p className="text-[11px] text-neutral-500">
-            Matched to your rank, skills and career path
-          </p>
-        </div>
-        <div className="hidden gap-1 @xl:flex">
-          {filters.map((f, i) => (
-            <span
-              key={f}
-              className={cn(
-                "rounded-full border px-2.5 py-0.5 text-[11px]",
-                i === 0
-                  ? "border-neutral-900 bg-neutral-900 text-white"
-                  : "border-neutral-200 text-neutral-600",
-              )}
-            >
-              {f}
-            </span>
-          ))}
-        </div>
-      </div>
+  const step = useTimeline([2600, 4800]);
+  const canvas = useCanvasSize();
+  const shift = { phone: "-85%", tablet: "-33.333%", desktop: "-25%" }[
+    canvas.name
+  ];
 
-      <div className="grid min-h-0 flex-1 auto-rows-min gap-2.5 @md:grid-cols-2 @4xl:grid-cols-3">
-        {opportunities.map((op, i) => {
-          const Icon = kindIcon[op.kind];
-          const isLocked = Boolean(op.unlocksAt);
-          return (
-            <motion.div
-              key={op.title}
-              initial={
-                reduceMotion ? false : { opacity: 0, y: 14, scale: 0.98 }
-              }
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.35, delay: 0.08 + i * 0.09 }}
-              className={cn(
-                "relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-3 shadow-xs",
-                i >= 3 && "@max-md:hidden",
-              )}
-            >
-              <div className="flex items-start gap-2.5">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-50 text-green-700">
-                  <Icon className="h-4 w-4" />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-semibold @2xl:text-sm">
-                    {op.title}
-                  </p>
-                  <p className="truncate text-[11px] text-neutral-500">
-                    {op.org} Â· {op.kind}
-                  </p>
-                </div>
-                <span
-                  className={cn(
-                    "shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-semibold tabular-nums",
-                    op.match >= 80
-                      ? "bg-green-100 text-green-800"
-                      : op.match >= 65
-                        ? "bg-amber-100 text-amber-800"
-                        : "bg-neutral-100 text-neutral-700",
-                  )}
-                >
-                  {op.match}% match
-                </span>
-              </div>
-              <p className="mt-2 line-clamp-1 text-[11px] text-neutral-600">
-                {op.summary}
+  return (
+    <motion.div
+      className="min-h-full bg-white px-4 @5xl/app:px-6"
+      initial={false}
+      animate={{ y: reduceMotion ? 0 : step >= 2 ? -430 : 0 }}
+      transition={{ duration: 1.1, ease: [0.4, 0, 0.2, 1] }}
+    >
+      {/* Promo banner */}
+      <div className="px-4 py-8">
+        <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 p-8 text-white">
+          <div className="flex flex-col gap-6 @5xl/app:flex-row @5xl/app:items-center @5xl/app:justify-between">
+            <div className="space-y-4">
+              <span className="inline-flex rounded-xl bg-white/20 px-2 py-0.5 text-xs font-medium">
+                Now Hiring
+              </span>
+              <h2 className="text-3xl font-bold">
+                Welcome to Career Opportunities Hub
+              </h2>
+              <p className="max-w-[600px] text-white/80">
+                Discover amazing career opportunities with top companies. From
+                startups to Fortune 500, find the perfect role that matches your
+                skills and ambitions.
               </p>
-              <div className="mt-2 flex flex-wrap gap-1">
-                {op.tags.map((t) => (
+              <div className="flex flex-wrap gap-3">
+                {[
+                  "Browse All Jobs",
+                  "View Fellowships",
+                  "Explore Projects",
+                ].map((label) => (
                   <span
-                    key={t}
-                    className="rounded bg-neutral-100 px-1.5 py-0.5 text-[10px] text-neutral-600"
+                    key={label}
+                    className="inline-flex h-9 items-center rounded-2xl bg-white px-4 text-sm font-medium text-indigo-700"
                   >
-                    {t}
+                    {label}
                   </span>
                 ))}
               </div>
-              {isLocked && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-[2px]">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-[11px] font-medium text-neutral-700 shadow-xs">
-                    <Lock className="h-3 w-3" /> Unlocks at {op.unlocksAt}
-                  </span>
-                </div>
-              )}
-            </motion.div>
-          );
-        })}
+            </div>
+            <div className="hidden @7xl/app:block">
+              <motion.div
+                animate={reduceMotion ? undefined : { rotate: 360 }}
+                transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                className="relative h-40 w-40"
+              >
+                <div className="absolute inset-0 rounded-full bg-white/10" />
+                <div className="absolute inset-4 rounded-full bg-white/20" />
+                <div className="absolute inset-8 rounded-full bg-white/30" />
+                <div className="absolute inset-12 rounded-full bg-white/40" />
+                <div className="absolute inset-16 rounded-full bg-white/50" />
+              </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.4 }}
-        className="hidden items-center gap-3 rounded-xl border border-green-200 bg-green-50/70 p-3 @lg:flex"
-      >
-        <img src="/ranks/PLATINUM_1.png" alt="" className="h-9 w-9 shrink-0" />
-        <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold text-neutral-900">
-            {platinumLocked} more opportunities unlock at Platinum
-          </p>
-          <AnimatedBar
-            value={xp.current}
-            max={xp.nextTier}
-            delay={0.9}
-            className="mt-1.5"
-          />
+      {/* Featured projects */}
+      <section className="space-y-4 px-4 py-8">
+        <SectionHeader
+          title="Featured Open Source Projects"
+          description="Contribute to popular open source projects and make an impact in the developer community."
+        />
+        <div className="overflow-hidden">
+          <motion.div
+            className="-ml-4 flex"
+            initial={false}
+            animate={{ x: reduceMotion ? 0 : step >= 1 ? shift : "0%" }}
+            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+          >
+            {projects.map((p) => (
+              <div key={p.title} className={basis}>
+                <ProjectCard project={p} />
+              </div>
+            ))}
+          </motion.div>
         </div>
-        <span className="shrink-0 text-[11px] font-medium text-green-800">
-          {(xp.nextTier - xp.current).toLocaleString("en-US")} XP to go
-        </span>
-      </motion.div>
-    </div>
+      </section>
+
+      {/* Featured fellowships */}
+      <section className="-mx-4 bg-gray-100/30 @5xl/app:-mx-6">
+        <div className="space-y-4 px-8 py-8 @5xl/app:px-10">
+          <SectionHeader
+            title="Featured Fellowship Programs"
+            description="Apply to prestigious fellowship programs like GSoC, MLH Fellowship, and more."
+          />
+          <div className="-ml-4 flex overflow-hidden">
+            {fellowships.map((f) => (
+              <div key={f.title} className={basis}>
+                <FellowshipCard f={f} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </motion.div>
   );
 }

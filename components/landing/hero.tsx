@@ -18,15 +18,17 @@ const HeroShowcase = dynamic(
 );
 
 function ShowcaseSkeleton() {
+  // Same footprint as ScaledCanvas at each breakpoint (phone / tablet /
+  // desktop design sizes), so nothing shifts when the preview mounts.
   return (
     <div aria-hidden>
-      <div className="flex h-[540px] overflow-hidden rounded-xl border border-white/10 bg-black md:h-[560px] lg:h-[600px]">
-        <div className="hidden w-44 shrink-0 flex-col gap-2 p-4 lg:flex">
+      <div className="flex aspect-[430/780] overflow-hidden rounded-xl border border-white/10 bg-black sm:aspect-[1100/760] lg:aspect-[1760/1000]">
+        <div className="hidden w-[18.75%] shrink-0 flex-col gap-2 p-4 sm:flex">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-3 rounded bg-white/10" />
+            <div key={i} className="h-2.5 rounded bg-white/10" />
           ))}
         </div>
-        <div className="m-2 flex-1 animate-pulse rounded-xl bg-white/90" />
+        <div className="m-1.5 flex-1 animate-pulse rounded-lg bg-white/90 sm:ml-0" />
       </div>
       <div className="mt-4 grid grid-cols-5 gap-2">
         {Array.from({ length: 5 }).map((_, i) => (

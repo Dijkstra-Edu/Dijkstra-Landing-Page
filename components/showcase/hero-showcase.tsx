@@ -8,39 +8,32 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import {
-  Bell,
-  BookOpen,
-  Bot,
-  Briefcase,
-  FolderKanban,
-  Gauge,
-  GraduationCap,
-  Home,
-  LayoutDashboard,
-  Newspaper,
-  Pause,
-  Play,
-  Sun,
-  Trophy,
-  UserRound,
-  Users,
-} from "lucide-react";
+  IconBrandOpenai,
+  IconDashboard,
+  IconDatabase,
+  IconListDetails,
+  IconUserCircle,
+  type Icon,
+} from "@tabler/icons-react";
+import { Pause, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AppShell, type NavKey } from "./app-shell";
+import { ScaledCanvas } from "./scaled-canvas";
 import { DashboardFrame } from "./frames/dashboard-frame";
-import { GptFrame } from "./frames/gpt-frame";
-import { RankingFrame } from "./frames/ranking-frame";
-import { OpportunitiesFrame } from "./frames/opportunities-frame";
 import { PortfolioFrame } from "./frames/portfolio-frame";
-import { demoUser } from "./data";
+import { OpportunitiesFrame } from "./frames/opportunities-frame";
+import { GptFrame } from "./frames/gpt-frame";
+import { HomeFrame } from "./frames/home-frame";
 
 type Frame = {
   id: string;
+  /** Label of the selector tab under the preview. */
   label: string;
-  /** Title shown in the app header. */
+  /** Page title shown in Dijkstra Web's header. */
   title: string;
   /** Sidebar entry highlighted while this frame is active. */
-  nav: string;
-  icon: typeof Home;
+  nav: NavKey;
+  icon: Icon;
   durationMs: number;
   Component: () => JSX.Element;
 };
@@ -51,154 +44,57 @@ export const showcaseFrames: Frame[] = [
     label: "Dashboard",
     title: "Dashboard",
     nav: "Dashboard",
-    icon: LayoutDashboard,
-    durationMs: 6000,
+    icon: IconDashboard,
+    durationMs: 7000,
     Component: DashboardFrame,
   },
   {
-    id: "gpt",
-    label: "Dijkstra GPT",
-    title: "Dijkstra GPT",
-    nav: "Dijkstra GPT",
-    icon: Bot,
-    durationMs: 7500,
-    Component: GptFrame,
-  },
-  {
-    id: "ranking",
-    label: "Ranking",
-    title: "Rank & XP",
+    id: "portfolio",
+    label: "Portfolio",
+    title: "Dashboard",
     nav: "Dashboard",
-    icon: Trophy,
-    durationMs: 5500,
-    Component: RankingFrame,
+    icon: IconUserCircle,
+    durationMs: 7000,
+    Component: PortfolioFrame,
   },
   {
     id: "opportunities",
     label: "Opportunities",
     title: "Opportunities",
     nav: "Projects Hub",
-    icon: Briefcase,
-    durationMs: 5500,
+    icon: IconDatabase,
+    durationMs: 7000,
     Component: OpportunitiesFrame,
   },
   {
-    id: "portfolio",
-    label: "Portfolio",
-    title: "Portfolio",
+    id: "gpt",
+    label: "Dijkstra GPT",
+    title: "Dijkstra GPT",
+    nav: "Dijkstra GPT",
+    icon: IconBrandOpenai,
+    durationMs: 9500,
+    Component: GptFrame,
+  },
+  {
+    id: "home",
+    label: "Home",
+    title: "Home",
     nav: "Home",
-    icon: UserRound,
-    durationMs: 5500,
-    Component: PortfolioFrame,
+    icon: IconListDetails,
+    durationMs: 6000,
+    Component: HomeFrame,
   },
 ];
 
-const sidebar: { label: string; icon: typeof Home; group?: string }[] = [
-  { label: "Home", icon: Home },
-  { label: "Dijkstra GPT", icon: Bot },
-  { label: "Dashboard", icon: Gauge },
-  { label: "Learning Hub", icon: BookOpen },
-  { label: "Blogs and Articles", icon: Newspaper },
-  { label: "Join a Team", icon: Users },
-  { label: "Projects Hub", icon: FolderKanban, group: "Opportunities" },
-  { label: "Fellowships", icon: GraduationCap },
-  { label: "Job Board", icon: Briefcase },
-];
-
-/** Coloured integration buttons shown in Dijkstra Web's header. */
-const headerDots = [
-  "#ff4500",
-  "#5b8def",
-  "#f48024",
-  "#5865f2",
-  "#0a66c2",
-  "#ffa116",
-];
-
-function AppChrome({
-  frame,
-  children,
-}: {
-  frame: Frame;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="@container relative flex h-full w-full overflow-hidden rounded-xl border border-white/10 bg-black">
-      {/* Sidebar (Dijkstra Web uses a dark inset sidebar) */}
-      <aside className="hidden w-44 shrink-0 flex-col gap-0.5 px-2 py-3 text-white @3xl:flex">
-        <div className="mb-3 flex items-center gap-2 px-2">
-          <img src="/icon.png" alt="" className="h-6 w-6" />
-          <span className="text-sm font-semibold">Dijkstra</span>
-        </div>
-        {sidebar.map((item) => (
-          <div key={item.label}>
-            {item.group && (
-              <p className="mt-3 px-2 pb-1 text-[10px] uppercase tracking-wider text-neutral-500">
-                {item.group}
-              </p>
-            )}
-            <span
-              className={cn(
-                "flex items-center gap-2 rounded-md px-2 py-1.5 text-[11px] transition-colors",
-                frame.nav === item.label
-                  ? "bg-white/10 text-white"
-                  : "text-neutral-400",
-              )}
-            >
-              <item.icon className="h-3.5 w-3.5" />
-              {item.label}
-            </span>
-          </div>
-        ))}
-        <div className="mt-auto flex items-center gap-2 rounded-md px-2 py-1.5">
-          <img src={demoUser.avatar} alt="" className="h-6 w-6 rounded-full" />
-          <div className="min-w-0">
-            <p className="truncate text-[11px] font-medium">{demoUser.name}</p>
-            <p className="truncate text-[10px] text-neutral-500">
-              @{demoUser.handle}
-            </p>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main panel */}
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden bg-white @3xl:my-2 @3xl:mr-2 @3xl:rounded-xl">
-        <header className="flex h-10 shrink-0 items-center gap-2 border-b border-neutral-100 px-3 text-neutral-900">
-          <img src="/icon.png" alt="" className="h-5 w-5 @3xl:hidden" />
-          <span className="text-xs font-semibold @2xl:text-sm">
-            {frame.title}
-          </span>
-          <div className="ml-auto flex items-center gap-1">
-            {headerDots.map((c) => (
-              <span
-                key={c}
-                className="hidden h-5 w-5 rounded-md @2xl:block"
-                style={{ backgroundColor: c }}
-              />
-            ))}
-            <Sun className="ml-1 hidden h-4 w-4 text-neutral-400 @md:block" />
-            <Bell className="h-4 w-4 text-neutral-400" />
-            <span className="ml-1 rounded-md bg-neutral-900 px-2 py-1 text-[10px] font-medium text-white">
-              Sign out
-            </span>
-          </div>
-        </header>
-        <div className="relative min-h-0 flex-1 overflow-hidden">
-          {children}
-          {/* Soft fade so clipped content on small screens looks intentional */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /**
- * Animated product preview for the hero: a quick sequence of frames that
- * render the graphs and assets of Dijkstra Web live (instead of a static
- * screenshot). Auto-advances; pauses on hover/focus, when scrolled out of
- * view, when the tab is hidden, or via the pause button. Honours
- * `prefers-reduced-motion` (no auto-advance, no animations).
+ * Animated product preview for the hero: Dijkstra Web itself â€” its sidebar,
+ * header pins, dashboard cards, charts, portfolio, opportunities hub and
+ * Dijkstra GPT â€” rendered live at real size and scaled to fit (see
+ * ScaledCanvas), cycling through a few short storylines.
+ *
+ * Auto-advances; pauses on hover/focus, when scrolled out of view, when the
+ * tab is hidden, or via the pause button. Honours `prefers-reduced-motion`
+ * (no auto-advance, frames render in their final state).
  */
 export function HeroShowcase() {
   const reduceMotion = useReducedMotion();
@@ -246,22 +142,30 @@ export function HeroShowcase() {
         role="tabpanel"
         aria-roledescription="Product preview"
         aria-label={`${frame.label} preview`}
-        className="relative h-[540px] md:h-[560px] lg:h-[600px]"
+        className="overflow-hidden rounded-xl border border-white/10 bg-black"
       >
-        <AppChrome frame={frame}>
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={frame.id}
-              className="absolute inset-0"
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
-            >
-              <frame.Component />
-            </motion.div>
-          </AnimatePresence>
-        </AppChrome>
+        {/* The preview is a picture of the product: hide it from assistive
+            tech (the tab labels describe each frame) and from pointer input. */}
+        <div aria-hidden className="pointer-events-none select-none">
+          <ScaledCanvas>
+            {() => (
+              <AppShell title={frame.title} active={frame.nav}>
+                <AnimatePresence initial={false}>
+                  <motion.div
+                    key={frame.id}
+                    className="absolute inset-0 bg-white"
+                    initial={reduceMotion ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={reduceMotion ? undefined : { opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                  >
+                    <frame.Component />
+                  </motion.div>
+                </AnimatePresence>
+              </AppShell>
+            )}
+          </ScaledCanvas>
+        </div>
       </div>
 
       {/* Frame selector */}
@@ -287,7 +191,7 @@ export function HeroShowcase() {
                   "group relative overflow-hidden rounded-lg border px-1.5 py-2 text-left transition-colors sm:px-3",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500",
                   selected
-                    ? "border-green-600/60 bg-white/[0.06] text-white"
+                    ? "border-white/25 bg-white/[0.06] text-white"
                     : "border-white/10 text-neutral-400 hover:border-white/25 hover:text-neutral-200",
                 )}
               >
@@ -337,6 +241,9 @@ export function HeroShowcase() {
           </button>
         )}
       </div>
+      <p className="mt-3 text-center text-xs text-neutral-500 sm:text-right">
+        Dijkstra Web, rendered live Â· sample data
+      </p>
     </div>
   );
 }
