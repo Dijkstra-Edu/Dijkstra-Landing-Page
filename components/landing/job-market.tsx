@@ -23,7 +23,8 @@ export function JobMarket() {
     <section
       id="job-market"
       aria-labelledby="job-market-heading"
-      className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 py-20 md:py-28"
+      data-nav-tone="light"
+      className="relative overflow-hidden border-t border-neutral-200 bg-white py-20 md:py-28"
     >
       <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
         <SectionHeading
@@ -50,10 +51,10 @@ export function JobMarket() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "group block rounded-2xl border p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600",
+                    "group block rounded-xl border p-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600",
                     featured
-                      ? "border-gray-900 bg-gray-950 text-white"
-                      : "border-gray-200 bg-white text-gray-900",
+                      ? "border-neutral-900 bg-neutral-950 text-white"
+                      : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400",
                   )}
                 >
                   <div className="flex items-center justify-between gap-3">

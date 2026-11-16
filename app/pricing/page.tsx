@@ -114,7 +114,7 @@ export default function PricingPage() {
               className={cn(
                 "flex flex-col rounded-3xl border p-6 sm:p-8",
                 plan.highlighted
-                  ? "border-green-500/40 bg-gradient-to-b from-green-950/50 to-black shadow-lg shadow-green-950/40"
+                  ? "border-green-600/50 bg-neutral-950"
                   : "border-white/10 bg-white/[0.03]",
               )}
             >

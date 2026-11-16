@@ -21,7 +21,7 @@ export function LinkCard({
 }) {
   const external = !href.startsWith("/");
   const classes = cn(
-    "group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500",
+    "group flex h-full flex-col rounded-xl border border-white/10 p-5 transition-colors hover:border-white/25 hover:bg-white/[0.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500",
     className,
   );
   const body = (
@@ -32,12 +32,7 @@ export function LinkCard({
           <ArrowUpRight className="h-4 w-4 shrink-0 text-neutral-500 transition-colors group-hover:text-green-400" />
         )}
       </div>
-      <h3
-        className={cn(
-          "font-semibold text-white group-hover:text-green-300",
-          icon && "mt-4",
-        )}
-      >
+      <h3 className={cn("font-semibold text-white", icon && "mt-4")}>
         {title}
       </h3>
       {description && (

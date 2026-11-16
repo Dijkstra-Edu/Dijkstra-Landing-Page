@@ -88,7 +88,7 @@ function DarkBar({ value, delay = 0 }: { value: number; delay?: number }) {
   return (
     <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
       <motion.div
-        className="h-full rounded-full bg-gradient-to-r from-green-600 to-emerald-400"
+        className="h-full rounded-full bg-green-500"
         initial={{ width: reduceMotion ? `${value}%` : 0 }}
         animate={{ width: `${value}%` }}
         transition={{ duration: 0.9, delay, ease: "easeOut" }}
@@ -113,7 +113,7 @@ function TierReveal() {
         <motion.img
           src="/ranks/GOLD_3.png"
           alt="Gold tier badge"
-          className="absolute inset-0 h-14 w-14 drop-shadow-[0_0_14px_rgba(245,197,24,0.55)]"
+          className="absolute inset-0 h-14 w-14"
           initial={
             reduceMotion ? false : { opacity: 0, scale: 0.3, rotate: -25 }
           }

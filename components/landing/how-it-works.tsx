@@ -346,11 +346,10 @@ export function HowItWorks() {
     <section
       id="how-it-works"
       aria-labelledby="how-it-works-heading"
-      className="relative overflow-hidden bg-white py-20 md:py-28"
+      data-nav-tone="light"
+      className="relative overflow-hidden border-t border-neutral-200 bg-neutral-50 py-20 md:py-28"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(5,177,5,0.08),transparent_50%)]" />
-
-      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container relative mx-auto px-4 md:px-6 lg:px-8">
         <SectionHeading
           id="how-it-works-heading"
           tone="light"
@@ -434,7 +433,7 @@ export function HowItWorks() {
         </div>
 
         <div className="mt-16 md:mt-20">
-          <h3 className="mb-6 text-center text-xs font-semibold uppercase tracking-widest text-gray-500 sm:text-sm">
+          <h3 className="mb-6 text-center text-sm font-medium text-neutral-500">
             Our members have gone on to work at
           </h3>
           <ScrollingLogos logos={logos} />

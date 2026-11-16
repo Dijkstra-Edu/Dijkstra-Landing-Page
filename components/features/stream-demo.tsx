@@ -31,7 +31,7 @@ export function StreamDemo({ stream: key }: { stream: string }) {
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-2xl shadow-green-950/30"
+      className="overflow-hidden rounded-xl border border-white/10 bg-black"
     >
       <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
         <div className="flex gap-1.5" aria-hidden>

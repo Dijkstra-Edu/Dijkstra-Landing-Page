@@ -11,11 +11,10 @@ export function Testimonials() {
     <section
       id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="relative overflow-hidden py-20 md:py-28"
+      data-nav-tone="dark"
+      className="relative overflow-hidden border-t border-white/10 bg-black py-20 md:py-28"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(5, 177, 5,0.1),transparent_50%)]" />
-
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+      <div className="container relative mx-auto px-4 md:px-6 lg:px-8">
         <SectionHeading
           id="testimonials-heading"
           eyebrow="Testimonials"
@@ -49,14 +48,14 @@ export function Testimonials() {
           ].map((testimonial, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
             >
-              <figure className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-white/20 sm:p-8">
-                <Quote className="h-7 w-7 text-green-500" aria-hidden />
-                <blockquote className="mt-4 flex-1 leading-relaxed text-gray-300">
+              <figure className="flex h-full flex-col rounded-xl border border-white/10 p-6 sm:p-8">
+                <Quote className="h-5 w-5 text-neutral-600" aria-hidden />
+                <blockquote className="mt-4 flex-1 leading-relaxed text-neutral-300">
                   {testimonial.content}
                 </blockquote>
                 <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
@@ -73,7 +72,9 @@ export function Testimonials() {
                     <p className="font-semibold text-white">
                       {testimonial.name}
                     </p>
-                    <p className="text-sm text-gray-400">{testimonial.role}</p>
+                    <p className="text-sm text-neutral-500">
+                      {testimonial.role}
+                    </p>
                   </div>
                 </figcaption>
               </figure>
@@ -83,7 +84,7 @@ export function Testimonials() {
         <div className="mt-10 text-center">
           <Link
             href="/case-studies"
-            className="inline-flex items-center gap-2 text-sm font-medium text-green-400 hover:text-green-300"
+            className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 underline-offset-4 hover:text-white hover:underline"
           >
             Read their stories â†’
           </Link>

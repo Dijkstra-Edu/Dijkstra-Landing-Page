@@ -22,7 +22,10 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
   return (
     <div className="relative" role="img" aria-label="Logos of companies where Dijkstra members have worked">
       <div
-        className={cn("group flex overflow-hidden", className)}
+        className={cn(
+          "group flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]",
+          className,
+        )}
         style={
           {
             "--duration": speedMap[speed],
@@ -45,7 +48,7 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
                   <img
                     src={src || "/placeholder.svg"}
                     alt=""
-                    className="h-10 w-auto filter grayscale hover:grayscale-0 transition duration-300 ease-in-out sm:h-14"
+                    className="h-9 w-auto opacity-70 grayscale transition duration-300 ease-in-out hover:opacity-100 hover:grayscale-0 sm:h-12"
                   />
                 </div>
               ))}
@@ -54,9 +57,7 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
         </div>
       </div>
 
-      {/* Gradient fade overlays */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background to-transparent" />
+      {/* Edges fade via mask-image, so it works on any background colour. */}
     </div>
   )
 }

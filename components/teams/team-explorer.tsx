@@ -354,9 +354,7 @@ function TeamDetailPanel({
         </div>
       ) : (
         <div>
-          <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
-            Members
-          </h4>
+          <h4 className="mb-3 text-xs font-medium text-neutral-500">Members</h4>
           {node.memberCount === 0 ? (
             <p className="text-sm text-neutral-400">
               No direct members â€” everyone here works in one of the sub-teams
@@ -370,7 +368,7 @@ function TeamDetailPanel({
 
       {node.children.length > 0 && (
         <div>
-          <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+          <h4 className="mb-3 text-xs font-medium text-neutral-500">
             Sub-teams
           </h4>
           <div className="flex flex-wrap gap-2">
@@ -677,7 +675,7 @@ export function TeamExplorer({
   if (!selectedNode) return null;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/80 shadow-2xl shadow-green-950/20 backdrop-blur">
+    <div className="overflow-hidden rounded-xl border border-white/10 bg-black">
       {/* Toolbar: departments (+ search on the full variant) */}
       <div className="flex flex-col gap-3 border-b border-white/10 p-3 sm:p-4 lg:flex-row lg:items-center">
         <div

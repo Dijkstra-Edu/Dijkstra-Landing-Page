@@ -189,7 +189,7 @@ export default async function TeamPage() {
 
         <section
           aria-labelledby="join-heading"
-          className="rounded-3xl border border-green-500/20 bg-gradient-to-br from-green-950/60 via-black to-black p-6 sm:p-10"
+          className="rounded-2xl border border-white/10 bg-neutral-950 p-6 sm:p-10"
         >
           <h2 id="join-heading" className="text-2xl font-bold sm:text-3xl">
             Join a team

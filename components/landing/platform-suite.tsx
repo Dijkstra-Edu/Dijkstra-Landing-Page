@@ -97,11 +97,10 @@ export function PlatformSuite() {
     <section
       id="products"
       aria-labelledby="products-heading"
-      className="relative overflow-hidden py-20 md:py-28"
+      data-nav-tone="dark"
+      className="relative overflow-hidden border-t border-white/10 bg-black py-20 md:py-28"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(5,177,5,0.1),transparent_50%)]" />
-
-      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container relative mx-auto px-4 md:px-6 lg:px-8">
         <SectionHeading
           id="products-heading"
           eyebrow="Products"
@@ -118,41 +117,43 @@ export function PlatformSuite() {
                 className="grid items-center gap-8 md:grid-cols-2 md:gap-12 lg:px-8 xl:px-16"
               >
                 <motion.div
-                  initial={{ opacity: 0, x: reversed ? 50 : -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.45 }}
                   className={cn(
                     "space-y-4 md:space-y-6",
                     reversed && "md:order-last",
                   )}
                 >
                   <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="text-2xl font-bold md:text-3xl">
+                    <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
                       {item.title}
                     </h3>
                     <StatusBadge status={item.status} />
                   </div>
-                  <p className="text-base text-gray-300 md:text-lg">
+                  <p className="text-base text-neutral-400 md:text-lg">
                     {item.description}
                   </p>
                   <ul className="space-y-2 md:space-y-3">
                     {item.bullets.map((bullet) => (
                       <li key={bullet} className="flex items-start gap-3">
-                        <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
-                        <span className="text-sm md:text-base">{bullet}</span>
+                        <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500 md:mt-1" />
+                        <span className="text-sm text-neutral-200 md:text-base">
+                          {bullet}
+                        </span>
                       </li>
                     ))}
                   </ul>
                   <div className="flex flex-wrap gap-3">
                     <Button
                       variant="outline"
-                      className="group border-2 border-gray-700 bg-gray-900/50 text-white transition-all duration-300 hover:border-green-500 hover:bg-gray-800/50 hover:text-white"
+                      className="group border-white/15 bg-transparent text-white hover:border-white/30 hover:bg-white/5 hover:text-white"
                       asChild
                     >
                       <Link href={item.learnMore}>
                         Learn more
-                        <ArrowRight className="h-4 w-4 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-green-500" />
+                        <ArrowRight className="h-4 w-4 text-neutral-500 transition-transform group-hover:translate-x-0.5" />
                       </Link>
                     </Button>
                     <Button
@@ -166,12 +167,12 @@ export function PlatformSuite() {
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, x: reversed ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <div className="rounded-lg bg-gradient-to-br from-green-500/20 to-gray-500/20 p-1">
+                  <div className="overflow-hidden rounded-xl border border-white/10 bg-neutral-950 p-1.5">
                     {item.media.kind === "image" ? (
                       <div className="relative w-full overflow-hidden rounded-lg">
                         <Image
@@ -180,7 +181,7 @@ export function PlatformSuite() {
                           width={1280}
                           height={720}
                           sizes="(min-width: 768px) 50vw, 100vw"
-                          className="h-auto w-full rounded-lg shadow-lg"
+                          className="h-auto w-full rounded-lg"
                         />
                       </div>
                     ) : (
@@ -192,7 +193,7 @@ export function PlatformSuite() {
                             alt={shot.alt}
                             width={120}
                             height={240}
-                            className="h-auto max-h-full w-[28%] max-w-[120px] rounded-lg object-contain shadow-lg"
+                            className="h-auto max-h-full w-[28%] max-w-[120px] rounded-lg object-contain"
                           />
                         ))}
                       </div>

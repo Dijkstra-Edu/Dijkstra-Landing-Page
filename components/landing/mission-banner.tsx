@@ -36,13 +36,16 @@ const segments = buildSegments();
 
 export function MissionBanner() {
   return (
-    <section className="relative flex h-[40vh] min-h-[260px] max-h-[440px] items-center justify-center overflow-hidden bg-white">
+    <section
+      data-nav-tone="light"
+      className="relative flex h-[40vh] min-h-[260px] max-h-[440px] items-center justify-center overflow-hidden bg-white"
+    >
       {/* Background Segments */}
       <div className="absolute inset-0 z-0">
         {segments.map((seg, i) => (
           <div
             key={i}
-            className="absolute h-[2px] bg-gray-500/70 rounded-full"
+            className="absolute h-px rounded-full bg-neutral-300"
             style={{
               top: `${seg.top}%`,
               left: `${seg.left}%`,
@@ -54,10 +57,11 @@ export function MissionBanner() {
 
       {/* Banner Text */}
       <div className="relative z-10 text-center px-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-black mb-3 tracking-tight">
+        {/* h2: the page already has its h1 in the hero. */}
+        <h2 className="mb-3 bg-white px-2 text-4xl font-semibold tracking-tight text-neutral-950 sm:text-5xl md:text-6xl">
           For Students, By Students
-        </h1>
-        <p className="text-green-600 text-lg sm:text-xl md:text-2xl font-semibold tracking-wide">
+        </h2>
+        <p className="text-lg font-medium text-green-700 sm:text-xl md:text-2xl">
           Dijkstra
         </p>
       </div>

@@ -171,18 +171,17 @@ export function FeatureStream() {
                     "group flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors lg:px-4 lg:py-3",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500",
                     selected
-                      ? "border-green-500/40 bg-white/[0.06]"
-                      : "border-white/10 hover:border-white/20 hover:bg-white/[0.03]",
+                      ? "border-white/20 bg-white/[0.04]"
+                      : "border-transparent hover:bg-white/[0.03]",
                   )}
                 >
-                  <span
+                  <f.icon
                     className={cn(
-                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5",
-                      f.accent,
+                      "h-4 w-4 shrink-0",
+                      selected ? "text-green-500" : "text-neutral-500",
                     )}
-                  >
-                    <f.icon className="h-4 w-4" />
-                  </span>
+                    aria-hidden
+                  />
                   <span className="min-w-0 flex-1">
                     <span className="flex items-center gap-2">
                       <span
@@ -243,7 +242,7 @@ export function FeatureStream() {
             id={`${baseId}-panel`}
             role="tabpanel"
             aria-label={`${feature.name} demo`}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-2xl shadow-green-950/30"
+            className="overflow-hidden rounded-xl border border-white/10 bg-black"
           >
             <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
               <div className="flex gap-1.5" aria-hidden>

@@ -64,9 +64,7 @@ export default async function PressPage() {
       <Section title="About Dijkstra">
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">
-              Short
-            </h3>
+            <h3 className="text-sm font-medium text-neutral-400">Short</h3>
             <p className="mt-3 leading-relaxed text-neutral-200">
               Dijkstra is an open-source, student-run platform that helps
               aspiring software engineers prepare for jobs in tech through
@@ -74,9 +72,7 @@ export default async function PressPage() {
             </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">
-              Long
-            </h3>
+            <h3 className="text-sm font-medium text-neutral-400">Long</h3>
             <p className="mt-3 leading-relaxed text-neutral-200">
               Dijkstra is an open-source organisation built by and for students.
               Its platform aggregates a student&apos;s activity across GitHub,

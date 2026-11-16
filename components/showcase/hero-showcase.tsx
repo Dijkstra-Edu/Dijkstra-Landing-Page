@@ -123,7 +123,7 @@ function AppChrome({
   children: React.ReactNode;
 }) {
   return (
-    <div className="@container relative flex h-full w-full overflow-hidden rounded-xl border border-white/10 bg-black shadow-2xl shadow-green-950/40">
+    <div className="@container relative flex h-full w-full overflow-hidden rounded-xl border border-white/10 bg-black">
       {/* Sidebar (Dijkstra Web uses a dark inset sidebar) */}
       <aside className="hidden w-44 shrink-0 flex-col gap-0.5 px-2 py-3 text-white @3xl:flex">
         <div className="mb-3 flex items-center gap-2 px-2">

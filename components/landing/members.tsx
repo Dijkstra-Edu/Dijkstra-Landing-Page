@@ -23,45 +23,42 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
   return (
     <section
       id="members"
-      className="relative overflow-hidden py-20 md:py-28"
+      data-nav-tone="dark"
+      className="relative overflow-hidden border-t border-white/10 bg-neutral-950 py-20 md:py-28"
       aria-labelledby="members-heading"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5,177,5,0.1),transparent_60%)]" />
-
-      <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container relative mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid gap-10 xl:grid-cols-12 xl:gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.45 }}
             className="max-w-3xl xl:col-span-4 xl:max-w-none"
           >
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-green-500">
+            <p className="mb-3 text-sm font-medium text-green-500">
               Current members
             </p>
             <h2
               id="members-heading"
-              className="mb-5 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+              className="mb-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-[1.1]"
             >
               The people building Dijkstra
             </h2>
-            <p className="mb-4 text-base text-gray-300 md:text-lg">
+            <p className="mb-4 text-base text-neutral-300 md:text-lg">
               Dijkstra is organised like an engineering company. Every team here
               is a real team in the {teams.org} GitHub organisation â€”
               departments, groups, teams and the projects they ship.
             </p>
-            <p className="mb-6 text-base text-gray-400">
+            <p className="mb-6 text-base text-neutral-500">
               Pick a team to see who is in it, or spot an open team and be the
               first to join.
             </p>
 
             <dl className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-2">
               {stats.people !== null && (
-                <div className="col-span-2 rounded-xl border border-green-500/20 bg-green-500/[0.06] px-4 py-3 sm:col-span-4 xl:col-span-2">
-                  <dt className="text-xs text-green-300/80">
-                    People on a team
-                  </dt>
+                <div className="col-span-2 rounded-lg border border-white/10 px-4 py-3 sm:col-span-4 xl:col-span-2">
+                  <dt className="text-xs text-neutral-500">People on a team</dt>
                   <dd className="text-3xl font-semibold tabular-nums text-white">
                     {stats.people}
                   </dd>
@@ -70,7 +67,7 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
               {figures.map((f) => (
                 <div
                   key={f.label}
-                  className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                  className="rounded-lg border border-white/10 px-4 py-3"
                 >
                   <dt className="text-xs text-neutral-500">{f.label}</dt>
                   <dd className="text-2xl font-semibold tabular-nums text-white">
@@ -86,7 +83,7 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
 
             <div className="flex flex-col gap-3 sm:flex-row xl:flex-col 2xl:flex-row">
               <Button
-                className="bg-green-700 text-white hover:bg-green-800"
+                className="bg-green-700 text-white hover:bg-green-600"
                 asChild
               >
                 <Link href="/team">
@@ -95,7 +92,7 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
               </Button>
               <Button
                 variant="outline"
-                className="border-green-500/60 bg-transparent text-green-400 hover:bg-green-950 hover:text-green-300"
+                className="border-white/15 bg-transparent text-neutral-200 hover:border-white/30 hover:bg-white/5 hover:text-white"
                 asChild
               >
                 <a href={joinTeamUrl}>
@@ -106,10 +103,10 @@ export function Members({ teams }: { teams: TeamsSnapshot }) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
             className="min-w-0 xl:col-span-8"
           >
             <TeamExplorer snapshot={teams} />

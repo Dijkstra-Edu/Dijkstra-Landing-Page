@@ -34,7 +34,7 @@ function Visual({ product }: { product: Product }) {
   if (visual.kind === "stream") return <StreamDemo stream={visual.stream} />;
   if (visual.kind === "image") {
     return (
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-green-500/20 to-gray-500/20 p-1">
+      <div className="overflow-hidden rounded-xl border border-white/10 bg-neutral-950 p-1.5">
         <Image
           src={visual.src}
           alt={visual.alt}
@@ -48,7 +48,7 @@ function Visual({ product }: { product: Product }) {
     );
   }
   return (
-    <div className="flex h-[320px] items-center justify-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-br from-green-950/60 to-black p-4 sm:h-[420px]">
+    <div className="flex h-[320px] items-center justify-center gap-3 rounded-xl border border-white/10 bg-neutral-950 p-4 sm:h-[420px]">
       {visual.shots.map((shot) => (
         <Image
           key={shot.src}
@@ -75,7 +75,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     <PageShell>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(ellipse_at_top,rgba(4,131,4,0.25),transparent_65%)]" />
         <div className="container relative mx-auto grid items-center gap-10 px-4 pb-12 pt-8 md:px-6 md:pt-12 lg:grid-cols-2 lg:gap-14 lg:px-8">
           <div>
             <nav
