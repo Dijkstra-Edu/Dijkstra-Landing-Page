@@ -1,30 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { addWeeks, format } from "date-fns";
-import {
-  AlertCircle,
-  Building,
-  Calendar,
-  CheckCircle,
-  Clock,
-  Code,
-  FileSearch,
-  Hourglass,
-  Lightbulb,
-  LogIn,
-  Terminal,
-} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { ArrowRight } from "lucide-react";
 import ScrollingLogos from "@/components/scrolling-logos";
 import { cn } from "@/lib/utils";
+import { platformLinks } from "@/lib/site";
 import { SectionHeading } from "./section-heading";
 
 const logos = [
@@ -42,311 +24,136 @@ const logos = [
   "/logos/tcs.png",
 ];
 
-type TimelineSubItem = {
+type Step = {
   title: string;
-  content: React.ReactNode;
+  detail: string;
+  /** How long the step usually takes (from Dijkstra's onboarding guide). */
+  duration: string;
+  /** Week (from the start date) the step usually begins. */
+  startWeek: number;
+  points?: string[];
 };
 
-type TimelineItemProps = {
+type Path = {
+  id: "beginners" | "university";
+  label: string;
   title: string;
-  description: string;
-  content: React.ReactNode;
-  icon: React.ComponentType<{ className?: string }>;
-  isLast?: boolean;
-  cumulativeTime?: string;
-  date?: Date | null;
-  subItems?: TimelineSubItem[];
+  summary: string;
+  /** Week by which most students are applying to S-tier roles. */
+  readyWeek: number;
+  steps: Step[];
 };
 
-const TimelineItem = ({
-  title,
-  description,
-  content,
-  icon: Icon,
-  isLast = false,
-  cumulativeTime,
-  date,
-  subItems = [],
-}: TimelineItemProps) => (
-  <div className="flex">
-    <div className="mr-3 flex flex-col items-center sm:mr-4">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-green-700 bg-white sm:h-10 sm:w-10">
-        <Icon className="h-4 w-4 text-green-700 sm:h-5 sm:w-5" />
-      </div>
-      {!isLast && <div className="mt-2 h-full w-0.5 bg-green-700/30"></div>}
-    </div>
-    <div className="mb-6 min-w-0 flex-1">
-      <Card className="mb-2 gap-0 py-0">
-        <CardHeader className="px-4 pb-2 pt-4 sm:px-6 sm:pt-6">
-          <CardTitle className="text-base leading-snug sm:text-lg">
-            {title}
-          </CardTitle>
-          <CardDescription className="text-sm">{description}</CardDescription>
-        </CardHeader>
-        <CardContent className="px-4 pb-4 text-sm sm:px-6 sm:pb-6 sm:text-base">
-          {content}
-          {date && (
-            <p className="mt-2 text-sm text-muted-foreground">
-              <Calendar className="inline mr-2" />
-              Estimated date: {format(date, "dd MMM yyyy")}
-            </p>
-          )}
-        </CardContent>
-      </Card>
-      {subItems.map((item, index) => (
-        <Card
-          key={index}
-          className="ml-3 mt-2 gap-0 border-dashed py-0 sm:ml-8"
-        >
-          <CardHeader className="px-4 pb-2 pt-4 sm:px-6">
-            <CardTitle className="text-sm">{item.title}</CardTitle>
-          </CardHeader>
-          <CardContent className="px-4 pb-4 text-sm sm:px-6">
-            {item.content}
-          </CardContent>
-        </Card>
-      ))}
-      {cumulativeTime && (
-        <div className="mt-2 text-right">
-          <span className="bg-muted px-2 py-1 rounded text-sm font-semibold text-black">
-            {cumulativeTime}
-          </span>
-        </div>
-      )}
-    </div>
-  </div>
-);
+const onboarding: Step = {
+  title: "Onboard with Dijkstra",
+  detail:
+    "Set up GitHub, Git, VS Code, Discord, LeetCode and LinkedIn with our guides.",
+  duration: "30 min â€“ 3 h",
+  startWeek: 0,
+};
 
+const applyStep = (startWeek: number): Step => ({
+  title: "Apply to S-tier opportunities",
+  detail:
+    "Top industry roles, research positions and partner companies â€” while you keep practising.",
+  duration: "Ongoing",
+  startWeek,
+  points: [
+    "Company-specific LeetCode",
+    "Resume, CV and your story in order",
+    "Mock interviews with the community",
+  ],
+});
+
+const paths: Path[] = [
+  {
+    id: "beginners",
+    label: "Absolute beginners",
+    title: "Starting from zero",
+    summary:
+      "Learn to code, then turn it into projects and problem-solving you can show.",
+    readyWeek: 14,
+    steps: [
+      onboarding,
+      {
+        title: "Learn to code",
+        detail:
+          "Fundamentals first â€” enough for both projects and technical interviews.",
+        duration: "4â€“8 weeks",
+        startWeek: 0,
+      },
+      {
+        title: "Build projects and start DSA",
+        detail:
+          "Ship several small projects while working through DSA on LeetCode.",
+        duration: "1â€“2 months",
+        startWeek: 6,
+        points: ["Projects: a few hours to a week each", "DSA: about a month"],
+      },
+      applyStep(14),
+    ],
+  },
+  {
+    id: "university",
+    label: "University students",
+    title: "Already coding",
+    summary:
+      "Sharpen DSA, reshape your profile and earn proof of work in open source.",
+    readyWeek: 18,
+    steps: [
+      onboarding,
+      {
+        title: "LeetCode, two problems a day",
+        detail: "Build DSA consistency alongside everything else.",
+        duration: "Ongoing",
+        startWeek: 0,
+      },
+      {
+        title: "Refactor your projects and profiles",
+        detail:
+          "Revamp portfolio, profiles and resume so they reflect your real work.",
+        duration: "2â€“4 weeks",
+        startWeek: 2,
+      },
+      {
+        title: "Open source with Dijkstra and partners",
+        detail: "Put it all to use on real projects with mentors.",
+        duration: "1â€“2 months",
+        startWeek: 6,
+      },
+      {
+        title: "Apply to open-source fellowships",
+        detail: "GSoC, LFX, Outreachy, MLH Fellowship and more.",
+        duration: "3â€“6 months",
+        startWeek: 12,
+      },
+      applyStep(18),
+    ],
+  },
+];
+
+/**
+ * "So how does this work?" â€” one path at a time, as a compact stepper with
+ * durations and dates estimated from a start date you pick.
+ */
 export function HowItWorks() {
-  const [selectedTimelinePath, setSelectedTimelinePath] = useState<
-    "beginners" | "university"
-  >("beginners");
-  // The start date is only known on the client. Initialising it during
-  // render (`new Date()`) produced different markup on the server and the
-  // client, which triggered React hydration errors.
+  const reduceMotion = useReducedMotion();
+  const baseId = useId();
+  const [pathId, setPathId] = useState<Path["id"]>("beginners");
+  // The start date is only known on the client; rendering `new Date()` on
+  // the server would produce different markup and a hydration error.
   const [startDate, setStartDate] = useState<Date | null>(null);
+  useEffect(() => setStartDate(new Date()), []);
 
-  useEffect(() => {
-    setStartDate(new Date());
-  }, []);
-
-  const calculateDate = (weeks: number) => {
-    return startDate ? addWeeks(startDate, weeks) : null;
-  };
-
-  const renderAbsoluteBeginners = () => (
-    <div className="space-y-4">
-      <h3 className="mb-4 mt-6 text-lg font-semibold text-gray-900 sm:text-xl">
-        Path 1: Absolute Beginners
-      </h3>
-      <TimelineItem
-        title="0) Onboarding with Dijkstra"
-        description="Get started by Setting up everything you need, From important sites to code editors. Time taken depends on your knoweldge of Git (or) other version control systems."
-        icon={LogIn}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Takes anywhere between 30mins to 3 hours to get up and running.
-          </p>
-        }
-        cumulativeTime="Start"
-        date={startDate}
-      />
-      <TimelineItem
-        title="1) Learning to Code"
-        description="Get started with the fundamentals of Coding. Start by learning the basics, building up to knowledge for both projects, as well as technical interviews."
-        icon={Code}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            This can take anywhere between 4-8 weeks.
-          </p>
-        }
-        cumulativeTime="6 weeks"
-        date={calculateDate(6)}
-      />
-      <TimelineItem
-        title="2) Gaining Value from Learning to Code"
-        description="Now the fun begins! Start by building simple projects, while progressing in your understanding of logic through DSA."
-        icon={FileSearch}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Can take anywhere between 1-2 months.
-          </p>
-        }
-        subItems={[
-          {
-            title: "Start working on Projects",
-            content: (
-              <p>
-                <Clock className="inline mr-2" />
-                Depends on the length of projects. Anywhere from 3 hours to a
-                week. The expectation is to complete multiple projects to better
-                understand how to use code practically.
-              </p>
-            ),
-          },
-          {
-            title: "Getting started with DSA and Leetcode",
-            content: (
-              <p>
-                <Clock className="inline mr-2" />
-                Understanding DSA goes a long way in being able to code what you
-                think in an effective manner! This can take a while, potentially
-                a month of serious study
-              </p>
-            ),
-          },
-        ]}
-        cumulativeTime="8 weeks"
-        date={calculateDate(8)}
-      />
-      {renderFinalSteps(2)}
-    </div>
-  );
-
-  const renderUniversityandExperienced = () => (
-    <div className="space-y-4">
-      <h3 className="mb-4 mt-6 text-lg font-semibold text-gray-900 sm:text-xl">
-        Path 2: For University and Experienced Students
-      </h3>
-      <TimelineItem
-        title="0) Onboarding with Dijkstra"
-        description="Get started by Setting up everything you need, From important sites to code editors. Time taken depends on your knoweldge of Git (or) other version control systems."
-        icon={LogIn}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Takes anywhere between 30mins to 3 hours to get up and running.
-          </p>
-        }
-        cumulativeTime="Start"
-        date={startDate}
-      />
-      <TimelineItem
-        title="1) Getting Started with Leetcode"
-        description="Start by improving your DSA skills by practicing 2 problems a day."
-        icon={Terminal}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Takes anywhere between 30mins to 3 hours to get up and running.
-          </p>
-        }
-        cumulativeTime="6 weeks"
-        date={calculateDate(6)}
-      />
-      <TimelineItem
-        title="2) Refactoring Approach to Projects"
-        description="Revamping profiles, portfolios and resumes to better reflect your skills and experience."
-        icon={Building}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Can take anywhere between 2-4 weeks.
-          </p>
-        }
-        cumulativeTime="8 weeks"
-        date={calculateDate(8)}
-      />
-      <TimelineItem
-        title="3) Approaching opportunities with Dijkstra and partner organizations"
-        description="Putting to use everything you've learned so far, with the help of Dijkstra and our partner organizations."
-        icon={CheckCircle}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Ideally 1-2 months of work within open source projects.
-          </p>
-        }
-        cumulativeTime="10 weeks"
-        date={calculateDate(10)}
-      />
-      <TimelineItem
-        title="4) Start applying to other Open Source Opportunities"
-        description="These include fellowships like GSOC, LFX, Outreachy, MLH Fellowship, etc."
-        icon={FileSearch}
-        content={
-          <p>
-            <Clock className="inline mr-2" />
-            Anywhere between 3-6 months, depending on time of year
-          </p>
-        }
-        cumulativeTime="18 weeks"
-        date={calculateDate(18)}
-      />
-      {renderFinalSteps(0)}
-    </div>
-  );
-
-  const renderFinalSteps = (previousWeeks: number) => (
-    <>
-      <TimelineItem
-        title="Start Applying to S-tier Opportunities"
-        description="These could be top of the line industry opportunities, research positions, or partner companies."
-        icon={Lightbulb}
-        content={
-          <>
-            <p className="mb-2">
-              <Clock className="inline mr-2" />
-              Keep working on Leetcode and DSA, preferrably company specific
-              problems.
-            </p>
-            <p className="mb-2">
-              <FileSearch className="inline mr-2" />
-              Have your Resume, CV and your story in order.
-            </p>
-            <p className="mb-2">
-              <Clock className="inline mr-2" />
-              Mock Interviews with members from the community
-            </p>
-            <p>
-              <AlertCircle className="inline mr-2" />
-              Brush up on general knoweldge. Everything on your Resume is fair
-              game!
-            </p>
-            <p className="mt-4 text-sm text-muted-foreground"></p>
-          </>
-        }
-        cumulativeTime={`${previousWeeks + 4} weeks`}
-        date={calculateDate(previousWeeks + 4)}
-      />
-      <TimelineItem
-        title="Prepare to Slow down work @Dijkstra"
-        description="You've done it! You've achieved a top tier job, hopefully one that's well compensated. All the Hardwork has paid off! Around here you are moved away from development within Dijkstra to focus on your new chapter."
-        icon={Hourglass}
-        content={
-          <p>
-            Hand over your responsibilities and document your work so the next
-            cohort can pick it up.
-          </p>
-        }
-        cumulativeTime={`${previousWeeks + 4} weeks`}
-        date={calculateDate(previousWeeks + 4)}
-      />
-      <TimelineItem
-        title="Mentoring + Management @Dijkstra"
-        description="You have the option to continue to work at Dijkstra as a Mentor or as a Technical Lead in Dijkstra's various projects. This could be experience that you can use to leverage better opportunities in your own career. The other option would be to step down into a community member role, a Passive, but lifelong member of the Dijkstra community :)"
-        icon={CheckCircle}
-        isLast={true}
-        content={
-          <p>
-            Mentor newer members, lead a project, or stay on as a lifelong
-            community member.
-          </p>
-        }
-        cumulativeTime={`â™¾ weeks`}
-        date={calculateDate(previousWeeks + 54)}
-      />
-    </>
-  );
+  const path = paths.find((p) => p.id === pathId)!;
+  const dateAt = (weeks: number) =>
+    startDate ? format(addWeeks(startDate, weeks), "d MMM yyyy") : "â€”";
 
   return (
     <section
       id="how-it-works"
-      aria-labelledby="how-it-works-heading"
       data-nav-tone="light"
+      aria-labelledby="how-it-works-heading"
       className="relative overflow-hidden border-t border-neutral-200 bg-neutral-50 py-20 md:py-28"
     >
       <div className="container relative mx-auto px-4 md:px-6 lg:px-8">
@@ -355,84 +162,164 @@ export function HowItWorks() {
           tone="light"
           eyebrow="Your path"
           title="So how does this work?"
-          description="Dijkstra helps you track progress and prepare for CS roles. It is aimed mainly at aspiring software engineers still in university, but anyone who wants to break into tech can use it."
+          description="Pick where you are today. Dijkstra lays out the steps, how long each usually takes, and when you could be applying."
         />
 
-        <div className="mb-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:items-end">
-          <div className="w-full max-w-xs">
+        <div className="mx-auto max-w-5xl">
+          {/* Controls */}
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div
+              role="radiogroup"
+              aria-label="Choose a path"
+              className="inline-flex w-full rounded-lg border border-neutral-200 bg-white p-1 sm:w-auto"
+            >
+              {paths.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={pathId === p.id}
+                  onClick={() => setPathId(p.id)}
+                  className={cn(
+                    "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors sm:flex-none",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600",
+                    pathId === p.id
+                      ? "bg-neutral-900 text-white"
+                      : "text-neutral-600 hover:text-neutral-900",
+                  )}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
             <label
               htmlFor="start-date"
-              className="mb-2 block text-center text-sm font-medium text-gray-700 sm:text-left"
+              className="flex items-center justify-between gap-3 text-sm text-neutral-600 sm:justify-start"
             >
-              If you start on
+              Starting
+              <input
+                type="date"
+                id="start-date"
+                value={startDate ? format(startDate, "yyyy-MM-dd") : ""}
+                onChange={(e) => {
+                  // Ignore cleared/partial input: `new Date("")` is an
+                  // Invalid Date and would make date-fns' format() throw.
+                  const next = new Date(`${e.target.value}T00:00:00`);
+                  if (!Number.isNaN(next.getTime())) setStartDate(next);
+                }}
+                className="h-9 rounded-md border border-neutral-200 bg-white px-2.5 text-sm text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600"
+              />
             </label>
-            <Input
-              type="date"
-              id="start-date"
-              value={startDate ? startDate.toISOString().split("T")[0] : ""}
-              onChange={(e) => {
-                // Ignore cleared/partial input: `new Date("")` is an Invalid
-                // Date and would make date-fns' format() throw.
-                const next = new Date(e.target.value);
-                if (!Number.isNaN(next.getTime())) setStartDate(next);
-              }}
-              className="h-10 w-full text-gray-700"
-            />
           </div>
 
-          {/* Timeline path toggle (both paths are shown side by side on xl) */}
-          <div
-            role="group"
-            aria-label="Choose a path"
-            className="flex w-full max-w-xs rounded-lg bg-gray-100 p-1 sm:w-auto sm:max-w-none xl:hidden"
-          >
-            {(
-              [
-                ["beginners", "Absolute beginners"],
-                ["university", "University students"],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                aria-pressed={selectedTimelinePath === value}
-                onClick={() => setSelectedTimelinePath(value)}
-                className={cn(
-                  "flex-1 rounded-md px-3 py-2 text-sm font-medium leading-tight transition-all duration-200 sm:whitespace-nowrap sm:px-4",
-                  selectedTimelinePath === value
-                    ? "bg-white text-gray-900 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900",
-                )}
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-10">
+            {/* Summary */}
+            <aside className="h-fit rounded-xl border border-neutral-200 bg-white p-6 lg:sticky lg:top-28">
+              <p className="text-sm font-medium text-green-700">{path.label}</p>
+              <h3 className="mt-1 text-xl font-semibold tracking-tight text-neutral-900">
+                {path.title}
+              </h3>
+              <p className="mt-2 text-neutral-600">{path.summary}</p>
+              <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-neutral-200 pt-5 text-sm">
+                <div>
+                  <dt className="text-neutral-500">Steps</dt>
+                  <dd className="mt-0.5 text-lg font-semibold tabular-nums text-neutral-900">
+                    {path.steps.length}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-neutral-500">Applying from</dt>
+                  <dd
+                    className="mt-0.5 text-lg font-semibold tabular-nums text-neutral-900"
+                    suppressHydrationWarning
+                  >
+                    {dateAt(path.readyWeek)}
+                  </dd>
+                </div>
+              </dl>
+              <a
+                href={platformLinks.onboarding}
+                className="group mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-900 underline-offset-4 hover:underline"
               >
-                {label}
-              </button>
-            ))}
+                Start onboarding
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </aside>
+
+            {/* Steps */}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.ol
+                key={path.id}
+                aria-labelledby={`${baseId}-steps`}
+                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="relative"
+              >
+                <span id={`${baseId}-steps`} className="sr-only">
+                  {path.label}: steps
+                </span>
+                {path.steps.map((step, i) => {
+                  const last = i === path.steps.length - 1;
+                  return (
+                    <li
+                      key={step.title}
+                      className="relative flex gap-4 pb-8 last:pb-0"
+                    >
+                      {!last && (
+                        <span
+                          aria-hidden
+                          className="absolute left-[13px] top-8 h-[calc(100%-2rem)] w-px bg-neutral-200"
+                        />
+                      )}
+                      <span className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-white font-mono text-xs text-neutral-700">
+                        {i + 1}
+                      </span>
+                      <div className="min-w-0 flex-1 pt-0.5">
+                        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                          <h3 className="font-semibold text-neutral-900">
+                            {step.title}
+                          </h3>
+                          <p
+                            className="shrink-0 text-sm tabular-nums text-neutral-500"
+                            suppressHydrationWarning
+                          >
+                            {step.duration} Â· from {dateAt(step.startWeek)}
+                          </p>
+                        </div>
+                        <p className="mt-1 text-neutral-600">{step.detail}</p>
+                        {step.points && (
+                          <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-neutral-500">
+                            {step.points.map((point) => (
+                              <li
+                                key={point}
+                                className="flex items-center gap-1.5"
+                              >
+                                <span className="h-1 w-1 rounded-full bg-neutral-400" />
+                                {point}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+                <li className="mt-8 rounded-lg border border-dashed border-neutral-300 p-4 text-sm text-neutral-600">
+                  <span className="font-medium text-neutral-900">
+                    After the offer:
+                  </span>{" "}
+                  hand over your work and document it for the next cohort â€” then
+                  stay on as a mentor or tech lead, or as a lifelong member of
+                  the community.
+                </li>
+              </motion.ol>
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* Timeline content */}
-        <div className="mx-auto max-w-3xl xl:max-w-none xl:px-8">
-          <div className="xl:grid xl:grid-cols-2 xl:gap-10">
-            <div
-              className={cn(
-                "space-y-4",
-                selectedTimelinePath !== "beginners" && "hidden xl:block",
-              )}
-            >
-              {renderAbsoluteBeginners()}
-            </div>
-            <div
-              className={cn(
-                "space-y-4",
-                selectedTimelinePath !== "university" && "hidden xl:block",
-              )}
-            >
-              {renderUniversityandExperienced()}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16 md:mt-20">
+        <div className="mt-20">
           <h3 className="mb-6 text-center text-sm font-medium text-neutral-500">
             Our members have gone on to work at
           </h3>
