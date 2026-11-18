@@ -174,7 +174,7 @@ export function TeamsSourceBadge({ snapshot }: { snapshot: TeamsSnapshot }) {
         />
       </span>
       {live
-        ? `Live from GitHub${ago ? ` Â· synced ${ago}` : ""}`
+        ? `Live from GitHub`
         : `Team structure from the ${snapshot.org} GitHub organisation`}
     </span>
   );

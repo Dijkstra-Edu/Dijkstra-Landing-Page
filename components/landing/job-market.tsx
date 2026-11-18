@@ -148,10 +148,6 @@ export function JobMarket() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-center text-xs text-neutral-500">
-          Thumbnails and headlines belong to their publishers and link to the
-          original articles and videos.
-        </p>
       </div>
     </section>
   );
