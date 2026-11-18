@@ -19,10 +19,10 @@
 import { mulberry32 } from "@/lib/seeded-random";
 
 export const demoUser = {
-  name: "Aarav Mehta",
-  handle: "aarav-dev",
+  name: "Jonathan Samuel",
+  handle: "JRS296",
   email: "aarav.mehta@example.com",
-  avatar: "/placeholder-user.jpg",
+  avatar: "/new pfp.jpg",
   bio: "CS undergrad. Working on @Dijkstra-Edu's Resume and CV Builder. Into React, TypeScript and compilers.",
   role: "SDE-1 (Frontend Engineer)",
   team: "Resume and CV Builder",
