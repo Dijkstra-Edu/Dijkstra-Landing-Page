@@ -1,7 +1,34 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* RESULTS/ holds patch archives (copies of old sources); never scan it. */
+@source not "../RESULTS";
+
 @custom-variant dark (&:is(.dark *));
+
+/* Motion tokens. The showcase progress animation also drives auto-advance. */
+@theme {
+  --animate-showcase-progress: showcase-progress 1s linear forwards;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes showcase-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -135,9 +162,26 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Anchored sections must not hide under the fixed header. */
+  section[id],
+  [id$="-heading"] {
+    scroll-margin-top: 6rem;
+  }
+  ::selection {
+    background-color: rgb(4 131 4 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
@@ -165,22 +209,23 @@
   margin-right: auto;
 }
 
+/* Quiet, neutral scrollbars (the thumb used to be brand green). */
 *::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-track {
-  background: black;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #048304;
-  border-radius: 14px;
-  border: 2px solid #048304;
+  background-color: rgb(115 115 115 / 0.45);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #005500;
+  background-color: rgb(115 115 115 / 0.7);
 }
 
 .default-scroll {

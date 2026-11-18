@@ -20,9 +20,12 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
   const animationDirection = direction === "left" ? "reverse" : "normal"
 
   return (
-    <div className="relative">
+    <div className="relative" role="img" aria-label="Logos of companies where Dijkstra members have worked">
       <div
-        className={cn("group flex overflow-hidden", className)}
+        className={cn(
+          "group flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]",
+          className,
+        )}
         style={
           {
             "--duration": speedMap[speed],
@@ -41,11 +44,11 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
           {[...Array(3)].map((_, setIndex) => (
             <div key={`set-${setIndex}`} className="flex shrink-0">
               {logos.map((src, idx) => (
-                <div key={`${setIndex}-${idx}`} className="mx-8 flex items-center">
+                <div key={`${setIndex}-${idx}`} className="mx-5 flex items-center sm:mx-8">
                   <img
                     src={src || "/placeholder.svg"}
-                    alt={`Company logo ${idx + 1}`}
-                    className="h-16 w-auto filter grayscale hover:grayscale-0 transition duration-300 ease-in-out"
+                    alt=""
+                    className="h-9 w-auto opacity-70 grayscale transition duration-300 ease-in-out hover:opacity-100 hover:grayscale-0 sm:h-12"
                   />
                 </div>
               ))}
@@ -54,9 +57,7 @@ const ScrollingLogos: React.FC<ScrollingLogosProps> = ({ logos, speed = "slow", 
         </div>
       </div>
 
-      {/* Gradient fade overlays */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background to-transparent" />
+      {/* Edges fade via mask-image, so it works on any background colour. */}
     </div>
   )
 }
